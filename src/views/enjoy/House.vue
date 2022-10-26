@@ -457,7 +457,6 @@
         //   man.animations.push(object.animations[0])
         // })
 
-
         const gltfLoader=new GLTFLoader()
 
         //加载监控摄像头
