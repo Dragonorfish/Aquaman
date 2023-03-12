@@ -1,5 +1,6 @@
 <template>
-    <div class="comment_body">
+  <div>
+    <div class="comment_body" v-if="!isLoading">
       <div class="comment_card">
         <h1>评论</h1>
         <div class="comment_area">
@@ -10,57 +11,59 @@
       </div>
       <SplitLine class="split_line"></SplitLine>
       <div class="comment_list">
-          <div class="comment_item" v-for="item in commentList">
-              <img :src="item.userAVATAR" class="avatar"/>
-              <div class="comment_box">
+        <div class="comment_item" v-for="item in commentList">
+          <img :src="item.userAVATAR" class="avatar"/>
+          <div class="comment_box">
 
 
-                <div class="comment">
-                  <span class="comment_text">{{item.commentContent}}</span>
-                  <div class="comment_info">
-                    <span>{{item.userName}}</span>
-                    <span style="color: #a8abb2">发布于</span>
-                    <span>{{item.addTime.substring(0,10)}}</span>
-                    <button @click="openReplyBox(item.id)">回复</button>
-                  </div>
-                </div>
-
-
-                <div :id="item.id" class="reply_box">
-                  <div class="reply_area">
-                    <img style="margin-left: 0" :src="userInfo.userAVATAR" class="avatar"/>
-                    <textarea style="height: 10rem" maxlength="1500" class="comment_input" placeholder="添加回复..." v-model="commentText"></textarea>
-                  </div>
-                  <div class="btns">
-                    <button style="background-color: #e6a23c;" class="comment_btn" @click="openReplyBox(item.id)" :disabled="addBtndisable">取消</button>
-                    <button class="comment_btn" @click="addComment(2,props.familyId,item.id)" :disabled="addBtndisable">回复</button>
-                  </div>
-                </div>
-
-
-                <div class="reply_comment" v-for="child in item.children">
-                  <img :src="child.userAVATAR" class="avatar"/>
-                  <div class="comment_box">
-                    <div class="comment">
-                      <span class="comment_text">{{child.commentContent}}</span>
-                      <div class="comment_info">
-                        <span>{{child.userName}}</span>
-                        <span style="color: #a8abb2">发布于</span>
-                        <span>{{child.addTime.substring(0,10)}}</span>
-                      </div>
-                    </div>
-                    </div>
-                </div>
-
-
+            <div class="comment">
+              <span class="comment_text">{{item.commentContent}}</span>
+              <div class="comment_info">
+                <span>{{item.userName}}</span>
+                <span style="color: #a8abb2">发布于</span>
+                <span>{{item.addTime.substring(0,10)}}</span>
+                <button @click="openReplyBox(item.id)">回复</button>
               </div>
+            </div>
+
+
+            <div :id="item.id" class="reply_box">
+              <div class="reply_area">
+                <img style="margin-left: 0" :src="userInfo.userAVATAR" class="avatar"/>
+                <textarea style="height: 10rem" maxlength="1500" class="comment_input" placeholder="添加回复..." v-model="commentText"></textarea>
+              </div>
+              <div class="btns">
+                <button style="background-color: #e6a23c;" class="comment_btn" @click="openReplyBox(item.id)" :disabled="addBtndisable">取消</button>
+                <button class="comment_btn" @click="addComment(2,props.familyId,item.id)" :disabled="addBtndisable">回复</button>
+              </div>
+            </div>
+
+
+            <div class="reply_comment" v-for="child in item.children">
+              <img :src="child.userAVATAR" class="avatar"/>
+              <div class="comment_box">
+                <div class="comment">
+                  <span class="comment_text">{{child.commentContent}}</span>
+                  <div class="comment_info">
+                    <span>{{child.userName}}</span>
+                    <span style="color: #a8abb2">发布于</span>
+                    <span>{{child.addTime.substring(0,10)}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
+        </div>
       </div>
       <div style="width: 100%;justify-content: center;display: flex;flex-direction: row">
         <button class="load_all" v-if="!loadAlldDisable" @click="getAllComment">加载全部</button>
       </div>
 
     </div>
+    <Loading v-if="isLoading"></Loading>
+  </div>
 </template>
 
 <script setup>
@@ -74,7 +77,7 @@
   import 'element-plus/es/components/message/style/css';
   import 'element-plus/es/components/message-box/style/css';
 
-
+  let isLoading=ref(true)
   const props = defineProps({
     familyId:String
   })
@@ -83,31 +86,36 @@
   let userInfo=JSON.parse(localStorage.getItem("userInfo"));
   let commentText=ref("");
   let loadAlldDisable=ref(true);
-  let commentList=ref(await initCommentList());
+  let commentList=ref({});
+
+
+  initCommentList()
+
+
+
 
   function openReplyBox(id){
       document.getElementById(id).style.display=document.getElementById(id).style.display==='flex'?"none":"flex"
   }
-  async function initCommentList() {
+  function initCommentList() {
     const queryData={
       familyId:props.familyId
     }
-    return new Promise((resolve, reject) => {
-      doActionByAqBack(
-        getServer().aquamanBackDev,
-        "AqArticleController",
-        "getCommentByFamilyIdByPage",
-        queryData
-      ).subscribe((response) => {
-        console.log(response.data)
-        if (response.data.length===11){
-          loadAlldDisable=false;
-        }
-        resolve(response.data)
-      });
-    })
+    doActionByAqBack(
+      getServer().aquamanBackDev,
+      "AqArticleController",
+      "getCommentByFamilyIdByPage",
+      queryData
+    ).subscribe((response) => {
+      console.log(response.data)
+      if (response.data.length===11){
+        loadAlldDisable=false;
+      }
+      commentList.value=response.data;
+      isLoading.value=!isLoading;
+    });
   }
-  async function getAllComment() {
+  function getAllComment() {
     const queryData={
       familyId:props.familyId
     }

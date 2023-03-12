@@ -4,14 +4,7 @@
         <div class="bgimg_cover"></div>
         <div class="background2">
             <ToolBar></ToolBar>
-            <Suspense>
-                <template #default>
-                    <router-view class="body"></router-view>
-                </template>
-                <template #fallback>
-                    <Loading></Loading>
-                </template>
-            </Suspense>
+            <router-view class="body"></router-view>
             <Footer></Footer>
         </div>
     </el-scrollbar>

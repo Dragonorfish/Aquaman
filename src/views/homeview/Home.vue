@@ -1,6 +1,7 @@
 <template>
   <div class="home_body">
-    <div class="blog_list_body">
+    <Loading v-if="isLoading"></Loading>
+    <div v-if="!isLoading" class="blog_list_body">
       <h1>文章列表</h1>
       <div class="blog_list">
         <div v-for="item in articleList" :key="item.id" class="blog_item">
@@ -13,7 +14,7 @@
 </template>
 
 <script setup>
-  import {ref} from "vue"
+  import {ref,onMounted} from "vue"
   import ArticleItem from '../../components/ArticleItem.vue'
   import Pagination from '../../components/Pagination.vue'
   import { doActionByAqBack } from "../../utils/ajaxService";
@@ -21,43 +22,47 @@
   import router from "../../router";
   let pageNum=ref(0)
   let currentBlogCount=ref(0)
+  let isLoading=ref(true)
   let queryData={
     page:0,
     size:10
   };
-  let articleList=ref(await initList(queryData));
+  let articleList=ref([]);
   console.log(articleList)
-  // pageChange(queryData);
+
+  onMounted(()=>{
+    initList(queryData)
+  })
 
   function pageChange(page){
     queryData.page=page-1;
-    return new Promise((resolve,reject)=>{
       doActionByAqBack(
         getServer().aquamanBackDev,
         "AqArticleController",
         "getArticleByPage",
         queryData
       ).subscribe((response) =>{
-        console.log(response)
-        pageNum=response.data.totalPages;
+        pageNum.value=response.data.totalPages;
         currentBlogCount.value=response.data.numberOfElements;
         articleList.value=response.data.content;
       });
-    })
   }
   function initList(queryData){
-    return new Promise((resolve,reject)=>{
       doActionByAqBack(
         getServer().aquamanBackDev,
         "AqArticleController",
         "getArticleByPage",
         queryData
       ).subscribe((response) =>{
-          pageNum=response.data.totalPages;
+          pageNum.value=response.data.totalPages;
           currentBlogCount.value=response.data.numberOfElements;
-          resolve(response.data.content);
+          articleList.value=response.data.content;
+          changeLoadingState();
       });
-    })
+  }
+  function changeLoadingState() {
+    console.log(isLoading.value)
+    isLoading.value=!isLoading.value
   }
 
 
