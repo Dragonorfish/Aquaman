@@ -40,17 +40,25 @@ import { formateSeconds } from "./utilsService";
 //     }
 //   )
 // }
-export function locationPoint(longitude, latitude, attributes, popupTemplate,type) {
+export function locationPoint(
+  longitude,
+  latitude,
+  attributes,
+  popupTemplate,
+  type
+) {
   let point = {
     type: "point", // autocasts as new Point()
     longitude: longitude,
     latitude: latitude,
   };
-  let url="";
-  if (type==="end"){
-      url="https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/end.png"
-  }else {
-      url="https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/start.png"
+  let url = "";
+  if (type === "end") {
+    url =
+      "https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/end.png";
+  } else {
+    url =
+      "https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/start.png";
   }
   var symbol = {
     type: "picture-marker",
@@ -58,12 +66,12 @@ export function locationPoint(longitude, latitude, attributes, popupTemplate,typ
     width: "30px",
     height: "30px",
     outline: {
-      style: "solid"
+      style: "solid",
     },
   };
 
   let pointGraphic = new Graphic({
-    id:type,
+    id: type,
     geometry: point,
     symbol: symbol,
     attributes: attributes,
@@ -72,171 +80,194 @@ export function locationPoint(longitude, latitude, attributes, popupTemplate,typ
   return pointGraphic;
 }
 
-export function dataToTable(dataArr,type) {
-  let data=[]
-  if (type===1){
-    dataArr.forEach((item)=>{
-      data.push([item.name,item.index,item.speed])
-    })
-  }else {
-    dataArr.forEach((item)=>{
-      data.push([item.name,item.index,item.speed,item.travelTime,item.delayTime])
-    })
+export function dataToTable(dataArr, type) {
+  let data = [];
+  if (type === 1) {
+    dataArr.forEach((item) => {
+      data.push([item.name, item.index, item.speed]);
+    });
+  } else {
+    dataArr.forEach((item) => {
+      data.push([
+        item.name,
+        item.index,
+        item.speed,
+        item.travelTime,
+        item.delayTime,
+      ]);
+    });
   }
 
-  console.log(dataArr)
+  console.log(dataArr);
   return data;
 }
 
 export function dataToPolygon(dataArr) {
-  let pointArr=[]
-  let graphicsLayers=new GraphicsLayer({
+  let pointArr = [];
+  let graphicsLayers = new GraphicsLayer({
     id: "searchResultLayer",
-  })
-  const color=[[52,176,0,0.7],[254,203,0,0.7],[223,1,0,0.7],[142,14,11,0.7]]
+  });
+  const color = [
+    [52, 176, 0, 0.7],
+    [254, 203, 0, 0.7],
+    [223, 1, 0, 0.7],
+    [142, 14, 11, 0.7],
+  ];
 
-  dataArr.forEach((area)=>{
-    let colorIndex=0
-    if (area.index>=1.5){
-      colorIndex=1
-      if (area.index>=1.8){
-        colorIndex=2
-        if (area.index>=2.1){
-          colorIndex=3
+  dataArr.forEach((area) => {
+    let colorIndex = 0;
+    if (area.index >= 1.5) {
+      colorIndex = 1;
+      if (area.index >= 1.8) {
+        colorIndex = 2;
+        if (area.index >= 2.1) {
+          colorIndex = 3;
         }
       }
     }
     let polygonAtt = {
       Name: area.name,
       Index: area.index,
-      Speed:area.speed,
+      Speed: area.speed,
     };
-    area.coords.forEach((polygon)=>{
-      pointArr=[]
-      polygon[0].forEach((point)=>{
-        pointArr.push([point.lon,point.lat])
-      })
+    area.coords.forEach((polygon) => {
+      pointArr = [];
+      polygon[0].forEach((point) => {
+        pointArr.push([point.lon, point.lat]);
+      });
       const areaPolygon = {
         type: "polygon",
-        rings: pointArr
+        rings: pointArr,
       };
       const simpleFillSymbol = {
         type: "simple-fill",
-        color:color[colorIndex],  // Orange, opacity 80%
+        color: color[colorIndex], // Orange, opacity 80%
         outline: {
           color: [255, 255, 255],
-          width: 1
-        }
+          width: 1,
+        },
       };
       const polygonGraphic = new Graphic({
         geometry: areaPolygon,
         symbol: simpleFillSymbol,
-        attributes:polygonAtt
+        attributes: polygonAtt,
       });
       graphicsLayers.add(polygonGraphic);
-    })
-  })
-  console.log(graphicsLayers.graphics.items)
-  return graphicsLayers
+    });
+  });
+  console.log(graphicsLayers.graphics.items);
+  return graphicsLayers;
 }
 
 export function dataToPolyline(dataArr) {
-  let pointArr=[]
-  let graphicsLayers=new GraphicsLayer({
+  let pointArr = [];
+  let graphicsLayers = new GraphicsLayer({
     id: "searchResultLayer",
-  })
-  const color=[[52,176,0,0.7],[254,203,0,0.7],[223,1,0,0.7],[142,14,11,0.7]]
-  console.log(dataArr)
-  dataArr.forEach((area)=>{
-    let colorIndex=0
-    if (area.index>=1.5){
-      colorIndex=1
-      if (area.index>=1.8){
-        colorIndex=2
-        if (area.index>=2.1){
-          colorIndex=3
+  });
+  const color = [
+    [52, 176, 0, 0.7],
+    [254, 203, 0, 0.7],
+    [223, 1, 0, 0.7],
+    [142, 14, 11, 0.7],
+  ];
+  console.log(dataArr);
+  dataArr.forEach((area) => {
+    let colorIndex = 0;
+    if (area.index >= 1.5) {
+      colorIndex = 1;
+      if (area.index >= 1.8) {
+        colorIndex = 2;
+        if (area.index >= 2.1) {
+          colorIndex = 3;
         }
       }
     }
     let polylineAtt = {
       Name: area.name,
       Index: area.index,
-      Speed:area.speed,
-      TravelTime:area.travelTime,
-      DelayTime: area.delayTime
+      Speed: area.speed,
+      TravelTime: area.travelTime,
+      DelayTime: area.delayTime,
     };
-    pointArr=[]
-    area.coords.forEach((point)=>{
-      pointArr.push([point.lon,point.lat])
-      })
-      const areaLine = {
-        type: "polyline",
-        paths: pointArr
-      };
-      const simpleLineSymbol = {
-        type: "simple-line",
-        color:color[colorIndex],  // Orange, opacity 80%
-        width: 4
-      };
-      const polylineGraphic = new Graphic({
-        geometry: areaLine,
-        symbol: simpleLineSymbol,
-        attributes:polylineAtt
-      });
-      graphicsLayers.add(polylineGraphic);
-    })
-  console.log(graphicsLayers.graphics.items)
-  return graphicsLayers
+    pointArr = [];
+    area.coords.forEach((point) => {
+      pointArr.push([point.lon, point.lat]);
+    });
+    const areaLine = {
+      type: "polyline",
+      paths: pointArr,
+    };
+    const simpleLineSymbol = {
+      type: "simple-line",
+      color: color[colorIndex], // Orange, opacity 80%
+      width: 4,
+    };
+    const polylineGraphic = new Graphic({
+      geometry: areaLine,
+      symbol: simpleLineSymbol,
+      attributes: polylineAtt,
+    });
+    graphicsLayers.add(polylineGraphic);
+  });
+  console.log(graphicsLayers.graphics.items);
+  return graphicsLayers;
 }
 
 export function dataToPlan(dataArr) {
-  let pointArr=[]
-  let polylineArr=[]
-  const color=[[52,176,0,0.7],[254,203,0,0.7],[223,1,0,0.7]]
-  let colorIndex=0
-  console.log(dataArr)
-  dataArr.forEach((path)=>{
-    pointArr=[]
-    let time=formateSeconds(path.cost.duration)
+  let pointArr = [];
+  let polylineArr = [];
+  const color = [
+    [52, 176, 0, 0.7],
+    [254, 203, 0, 0.7],
+    [223, 1, 0, 0.7],
+  ];
+  let colorIndex = 0;
+  console.log(dataArr);
+  dataArr.forEach((path) => {
+    pointArr = [];
+    let time = formateSeconds(path.cost.duration);
     let pathAtt = {
-      time:time[0]+"小时"+time[1]+"分",
-      distance:parseInt(path.distance)>=1000?parseFloat(parseInt(path.distance)/100+"")/10+"公里":path.distance+"米",
-      trafficLight:path.cost.traffic_lights
+      time: time[0] + "小时" + time[1] + "分",
+      distance:
+        parseInt(path.distance) >= 1000
+          ? parseFloat(parseInt(path.distance) / 100 + "") / 10 + "公里"
+          : path.distance + "米",
+      trafficLight: path.cost.traffic_lights,
     };
-    let pointsStr=""
-    path.steps.forEach((polyLine)=>{
-      pointsStr+=polyLine.polyline;
-    })
-    pointsStr=pointsStr.split(";")
-    pointsStr.forEach((point)=>{
-      point=point.split(",")
-      pointArr.push([parseFloat(point[0]),parseFloat(point[1])])
-    })
+    let pointsStr = "";
+    path.steps.forEach((polyLine) => {
+      pointsStr += polyLine.polyline;
+    });
+    pointsStr = pointsStr.split(";");
+    pointsStr.forEach((point) => {
+      point = point.split(",");
+      pointArr.push([parseFloat(point[0]), parseFloat(point[1])]);
+    });
 
     const areaLine = {
       type: "polyline",
-      paths: pointArr
+      paths: pointArr,
     };
-    console.log(color[colorIndex])
+    console.log(color[colorIndex]);
     const simpleLineSymbol = {
       type: "simple-line",
-      color:color[colorIndex],  // Orange, opacity 80%
-      width: 4
+      color: color[colorIndex], // Orange, opacity 80%
+      width: 4,
     };
-    if (colorIndex<2){
-      colorIndex+=1
+    if (colorIndex < 2) {
+      colorIndex += 1;
     }
     let polylineGraphic = new Graphic({
       geometry: areaLine,
       symbol: simpleLineSymbol,
-      attributes:pathAtt,
-      popu:{
+      attributes: pathAtt,
+      popu: {
         // autocasts as new PopupTemplate()
         title: "{Name}",
-        content: ""
-      }
+        content: "",
+      },
     });
-    polylineArr.push(polylineGraphic)
-  })
-  return polylineArr
+    polylineArr.push(polylineGraphic);
+  });
+  return polylineArr;
 }
