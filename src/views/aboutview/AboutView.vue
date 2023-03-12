@@ -1,0 +1,140 @@
+<template>
+  <div class="about_body">
+    <div class="about_title">
+      海王汇智工作室
+    </div>
+    <div class="about_card">
+      <div v-for="item in aboutInfo" class="about_box">
+        <h2 class="self_introduction">成员名称</h2>
+        <p>{{item.selfName}}</p>
+        <h2 class="self_introduction">个人介绍</h2>
+        <p>{{item.selfIntroduction}}</p>
+        <h2 class="self_introduction">个性签名</h2>
+        <p>{{item.speak}}</p>
+        <h2 class="self_introduction">联系方式</h2>
+        <p>{{item.contactInfo}}</p>
+      </div>
+    </div>
+    <CommentArea :familyId="'about'" class="comment_body"></CommentArea>
+  </div>
+</template>
+
+<script setup>
+  import CommentArea from "../../components/CommentArea.vue"
+
+
+  const aboutInfo=[
+    {
+      selfName:"Caspar",
+      selfIntroduction:"武汉理工大学 地理信息科学系 大三",
+      speak:"I can do all things",
+      contactInfo:"QQ:2677423874"
+    },
+    {
+      selfName:"amllIHFx",
+      selfIntroduction:"武汉理工大学 地理信息科学系 大三",
+      speak:"这个人有点懒，什么都没有说 ",
+      contactInfo:"QQ:541610102"
+    },
+    {
+      selfName:"樱",
+      selfIntroduction:"武汉理工大学 地理信息科学系 大三",
+      speak:"人は笑われって笑われって強くなった",
+      contactInfo:"QQ:2771634192"
+    }
+  ]
+
+
+</script>
+
+<style scoped>
+  .about_body{
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    border: 5px solid #00a4a2;
+    border-radius: 20px;
+    box-shadow:0px 0px 20px 0px #00a4a2;
+    display: flex;
+    flex-direction: column;
+  }
+  .about_title{
+    font-size: 40px;
+    font-weight: 900;
+    color: whitesmoke;
+    margin: 2rem;
+    position: relative;
+    padding-bottom: 0.6rem;
+  }
+  .about_title::after{
+    border-radius: 9999px;
+    height: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    width: 9rem;
+    content: "";
+    background-image: linear-gradient(to right,aquamarine,orange);
+    left: 0;
+  }
+  p{
+    color: whitesmoke;
+    margin: 1rem;
+    overflow-wrap: break-word;
+    opacity: 0.8;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  h2{
+    padding-bottom: 0.75rem;
+    color: whitesmoke;
+    margin: 1rem;
+  }
+  h2::after{
+    border-radius: 9999px;
+    height: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    width: 6rem;
+    content: "";
+    background-image: linear-gradient(to right,aquamarine,orange);
+    left: 0;
+  }
+  .about_box{
+    width: 30%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow:0px 0px 20px 0px #00a4a2;
+    margin: 2rem;
+    padding-bottom: 4rem;
+  }
+  .about_box:hover{
+    transform: scale(1.01);
+    animation: expand linear 0.2s;
+  }
+  @keyframes expand {
+    0%{transform: scale(1);}
+    100%{transform: scale(1.01);}
+  }
+  .about_card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media (max-width: 1080px) {
+    .about_card{
+      display: flex;
+      flex-direction: column;
+    }
+    .about_box{
+      width: 80%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow:0px 0px 20px 0px #00a4a2;
+      margin: 2rem;
+      background-image: linear-gradient(to bottom,black,#0B4252,black);
+    }
+  }
+  .comment_body{
+    box-shadow:0px 0px 0px 0px #00a4a2;
+  }
+</style>

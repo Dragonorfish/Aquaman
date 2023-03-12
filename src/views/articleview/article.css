@@ -1,0 +1,58 @@
+
+.article_card p{
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height:27px
+}
+
+.article_card h1,h2,h3,h4,h5,h6{
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+.article_card li::marker{
+  color: aqua;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.article_card h1::after,h2::after,h3::after,h4::after,h5::after,h6::after{
+  border-radius: 9999px;
+  height: 0.25rem;
+  position: absolute;
+  bottom: 0;
+  width: 6rem;
+  content: "";
+  background-image: linear-gradient(to right,aquamarine,orange);
+  left: 0;
+}
+
+
+.article_card img{
+    width: 80%;
+    height: auto;
+}
+
+.article_card pre{
+  width: 80%;
+  height: auto;
+  padding: 1rem;
+  border: 1px solid aquamarine;
+  border-radius: 15px;
+  font-size: 18px;
+  overflow: auto;
+}
+
+.article_card pre code{
+  position: relative;
+
+}
+
+.article_card a{
+  color: #00b8b6;
+  text-decoration-line: none;
+}
+.article_card{
+
+}

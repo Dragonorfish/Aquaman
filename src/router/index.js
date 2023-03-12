@@ -1,86 +1,82 @@
 import { createRouter, createWebHistory } from "vue-router";
-import RoadCrowd from "../views/citydetail/RoadCrowd.vue";
-import AreaCrowd from "../views/citydetail/AreaCrowd.vue";
-import TrafficForecast from "../views/citydetail/TrafficForecast.vue";
-import TravelPlan from "../views/citydetail/TravelPlan.vue";
-import CountryNode from "../views/countrydetail/CountryNode.vue";
-import CountrySafe from "../views/countrydetail/CountrySafe.vue";
-import CountryReport from "../views/reports/CountryReport.vue";
-import CityReport from "../views/reports/CityReport.vue";
-import ToggleBaseMap from "../components/ToggleBaseMap.vue";
-import OverviewMap from "../components/OverviewMap.vue";
-import Enjoy from "../views/enjoy/Enjoy.vue";
-import House from "../views/enjoy/House.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
-      component: TravelPlan,
+      name: "homePage",
+      component: () => import("../views/homeview/HomePage.vue"),
+      children:[
+        {
+          path: "/bloggingPage",
+          name: "bloggingPage",
+          component: () => import("../views/bloggingview/BloggingPage.vue")
+        },
+        {
+          path: "/home",
+          name: "home",
+          component: () => import("../views/homeview/Home.vue")
+        },
+        {
+          path: "/article/:id",
+          name: "article",
+          component: () => import("../views/articleview/ArticleView.vue"),
+        },
+        {
+          path: "/about",
+          name: "about",
+          component: () => import("../views/aboutview/AboutView.vue")
+        },
+        {
+          path: "/test",
+          name: "test",
+          component: () => import("../views/testview/test.vue"),
+        },
+      ]
     },
     {
-      path: "/togglemap",
-      name: "toggleBaseMap",
-      component: ToggleBaseMap,
+      path: "/login",
+      name: "login",
+      component: () => import("../views/loginview/login.vue")
     },
     {
-      path: "/map",
-      name: "map",
-      component: OverviewMap,
+      path: "/register",
+      name: "register",
+      component: () => import("../views/loginview/Register.vue")
     },
     {
-      path: "/AreaCrowd",
-      name: "AreaCrowd",
-      component: AreaCrowd,
+      path: "/pubSuccess",
+      name: "pubSuccess",
+      component: ()=>import("../views/tipsview/PubSuccessPage.vue")
     },
     {
-      path: "/RoadCrowd",
-      name: "RoadCrowd",
-      component: RoadCrowd,
-    },
-    {
-      path: "/TrafficForecast",
-      name: "TrafficForecast",
-      component: TrafficForecast,
-    },
-    {
-      path: "/CountryNode",
-      name: "CountryNode",
-      component: CountryNode,
-    },
-    {
-      path: "/CountrySafe",
-      name: "CountrySafe",
-      component: CountrySafe,
-    },
-    {
-      path: "/CountryReport",
-      name: "CountryReport",
-      component: CountryReport,
-    },
-    {
-      path: "/CityReport",
-      name: "CityReport",
-      component: CityReport,
-    },
-    {
-      path: "/TravelPlan",
-      name: "TravelPlan",
-      component: TravelPlan,
-    },
-    {
-      path: "/Enjoy",
-      name: "Enjoy",
-      component: Enjoy,
-    },
-    {
-      path: "/House",
-      name: "House",
-      component: House,
-    },
+      path: "/404",
+      name: "404",
+      component: ()=>import("../views/tipsview/404.vue")
+    }
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(from,to)
+  if (to.path === '/login') {
+    next();
+  } else {
+    let token = localStorage.getItem('token');
+    console.log(token)
+    if (token === null || token === '') {
+      next('/login');
+    }else if(to.path==="/"){
+      next('/home')
+    } else {
+      if (to.matched.length === 0) {
+        next('/login')
+      } else {
+        next();
+      }
+    }
+  }
 });
 
 export default router;
