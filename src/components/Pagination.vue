@@ -13,8 +13,8 @@
 <script setup>
   import {ref} from "vue"
   const props = defineProps({
-    total: { type: [Number, String], default: 0 }, // 总页数 The total number of
-    pageNum: { type: [Number, String], default: 1 }, // 当前页数 The current number of pages
+    total: { type: [Number, String], default: 0 }, // 总页数
+    pageNum: { type: [Number, String], default: 1 }, // 当前页数
   });
   const emit = defineEmits(["page-change", "size-change"]);
   /** 当前激活的页码 */

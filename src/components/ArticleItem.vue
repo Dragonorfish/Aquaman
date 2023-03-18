@@ -1,6 +1,6 @@
 <template>
     <div class="item_box">
-      <div class="bg_img" :style="{backgroundImage:'url('+articleInfo.titleImg+')'}"></div>
+      <div class="bg_img" :style="{backgroundImage:'url('+titleImg+')'}"></div>
       <div class="bg_color"></div>
       <div class="art_info">
         <div @click="toArtContent" class="title">
@@ -25,22 +25,30 @@
 </template>
 
 <script setup>
-  import {toRefs,reactive } from "vue";
+  import {toRefs,reactive,ref} from "vue";
   import { markdownToHtmlWithoutLink } from "../utils/MarkdownUtils";
   import router from "../router";
   const props = defineProps({
       articleInfo: {
         type:Object,
         default:{
-          titleImg:"https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/defaultBgPic.png",
+          titleImg:"",
           artContent:"",
           artTitle:""
         }
       }
   })
   // const articleContent=props.articleInfo.artContent.replace(/^(\s|")+|(\s|")+$/g, '').replace(/\\n/g, '\n').slice(0,200);
-
+  let titleImg=ref("https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/defaultBgPic.png")
   props.articleInfo.addTime=props.articleInfo.addTime.substring(0,10);
+  preLoadImg()
+  function preLoadImg() {
+    let img = new Image()
+    img.src=props.articleInfo.titleImg
+    img.onload=()=>{
+      titleImg.value=props.articleInfo.titleImg;
+    }
+  }
   function toArtContent() {
     router.push("/article/"+props.articleInfo.id);
   }
