@@ -4,12 +4,15 @@
     position: relative;
 }
 .body{
-    max-width: 1524px;
+    max-width: 1424px;
     animation: appear 0.5s ease-out;
     margin: auto;
-    padding-left: 3rem;
-    padding-right: 3rem;
     margin-bottom: 5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 @media (max-width: 1024px) {
     .body{
@@ -32,6 +35,7 @@
     background-image: url("/src/assets/static/bgpic.jpg");
     object-fit: cover;
     position: absolute;
+    width: 100%;
     z-index: -20;
 }
 .background::after{

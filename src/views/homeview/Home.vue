@@ -13,6 +13,58 @@
   </div>
 </template>
 
+<style scoped>
+  .blog_list{
+    position: relative;
+    display: grid;
+    grid-template-columns:repeat(2,49%);
+    gap: 2rem;
+
+  }
+  .blog_list_body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  @media (max-width: 1024px) {
+    .blog_list{
+      position: relative;
+      display: grid;
+      grid-template-columns:repeat(1,100%);
+      gap: 2rem;
+    }
+  }
+  .home_body{
+    display: flex;
+    flex-direction: column;
+  }
+  .blog_item{
+    height: 17rem;
+  }
+  .pagination{
+    margin: 4rem;
+  }
+  h1{
+    font-weight: 400;
+    color: whitesmoke;
+    margin: 2rem;
+    margin-left: 0;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+  h1::after{
+    border-radius: 9999px;
+    height: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    width: 6rem;
+    content: "";
+    background-image: linear-gradient(to right,aquamarine,orange);
+    left: 0;
+  }
+</style>
+
+
 <script setup>
   import {ref,onMounted} from "vue"
   import ArticleItem from '../../components/ArticleItem.vue'
@@ -68,53 +120,3 @@
 
 </script>
 
-<style scoped>
-  .blog_list{
-    position: relative;
-    display: grid;
-    grid-template-columns:repeat(2,49%);
-    gap: 2rem;
-
-  }
-  .blog_list_body{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  @media (max-width: 1024px) {
-    .blog_list{
-      position: relative;
-      display: grid;
-      grid-template-columns:repeat(1,100%);
-      gap: 2rem;
-    }
-  }
-  .home_body{
-    display: flex;
-    flex-direction: column;
-  }
-  .blog_item{
-    height: 17rem;
-  }
-  .pagination{
-    margin: 4rem;
-  }
-  h1{
-    font-weight: 400;
-    color: whitesmoke;
-    margin: 2rem;
-    margin-left: 0;
-    position: relative;
-    padding-bottom: 0.75rem;
-  }
-  h1::after{
-    border-radius: 9999px;
-    height: 0.25rem;
-    position: absolute;
-    bottom: 0;
-    width: 6rem;
-    content: "";
-    background-image: linear-gradient(to right,aquamarine,orange);
-    left: 0;
-  }
-</style>

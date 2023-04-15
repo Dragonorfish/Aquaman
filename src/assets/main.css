@@ -10,6 +10,20 @@ body {
 }
 body button{
   cursor: url("pointer1.cur"),auto;
+  width: 7rem;
+  height: 3rem;
+  margin: 0.6rem;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  opacity: 0.8;
+  background-color: #00a4a2;
+  color: whitesmoke;
+  border: 0px;
+  transition: opacity 0.5s;
+}
+button:hover{
+  opacity: 1;
 }
 ::-webkit-scrollbar {
   width: 10px;

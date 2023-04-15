@@ -13,7 +13,13 @@
             <button class="route_button" id="button4">搜索</button>
             <button class="route_button" id="button5">消息</button>
             <button class="route_button" id="button6">账户</button>
-            <button class="route_button" id="button7" @click="ToMdEditor">发布</button>
+            <span class="route_button" id="button7">
+                发布
+                <div id="child_tab">
+                    <button class="route_button" id="button7-1" @click="ToMdEditor" >文章</button>
+                    <button class="route_button" id="button7-2" @click="ToPubTalk">说说</button>
+                </div>
+            </span>
             <button class="route_button" id="button8" @click="ToTest">测试</button>
         </div>
     </div>
@@ -22,12 +28,26 @@
 <script setup>
   import router from "../router";
   import MdEditor from "../components/MdEditor.vue"
+  import { onMounted } from "vue"
+
+  onMounted(()=> {
+      document.getElementById("button7").addEventListener('mouseover', function(e) {
+          document.getElementById("child_tab").style.display="flex"
+      })
+      document.getElementById("button7").addEventListener('mouseleave', function(e) {
+          document.getElementById("child_tab").style.display="none"
+      })
+  })
+
 
   function ToHome(){
     router.push("/home")
   }
   function ToMdEditor(){
     router.push("/bloggingPage")
+  }
+  function ToPubTalk(){
+      router.push("/pubTalk")
   }
   function ToTest(){
       router.push("/test")
@@ -39,6 +59,7 @@
 
 <style scoped>
     .tool-bar{
+        box-sizing: border-box;
         display: flex;
         flex-direction: row;
         justify-content: start;
@@ -49,6 +70,7 @@
         margin-left: auto;
         margin-right: auto;
         height: 200px;
+        padding-left: 3rem;
     }
     .logo{
         display: flex;
@@ -60,10 +82,11 @@
     }
     .back_logo{
         background-image: url("../assets/static/weblogo.png");
-        background-size: 95%;
-        width: 200%;
-        height: 290%;
+        background-repeat: no-repeat;
+        background-size: cover;
         position: absolute;
+        height: 192px;
+        width: 256px;
         opacity: 0.2;
     }
     .logo p{
@@ -84,7 +107,6 @@
         align-items: center;
         height:60px ;
         position: relative;
-        overflow: auto;
     }
     .back_color{
         position: absolute;
@@ -115,9 +137,41 @@
         animation: color 0.4s ease-out;
 
     }
+    #button7{
+        position: relative;
+        font-weight: 600;
+        opacity: 0.8;
+    }
+    #child_tab{
+        background-color: #2e2e2e;
+        padding: 5px;
+        position: absolute;
+        border-radius: 15px;
+        top:100%;
+        display: none;
+        flex-direction: column;
+        animation: appear 0.4s ease-out;
+    }
+    #button7-1:hover{
+        background-color: gray;
+        animation: childColor 0.4s ease-out;
+    }
+    #button7-2:hover{
+        background-color: gray;
+        animation: childColor 0.4s ease-out;
+    }
     @keyframes color {
         0%{background: transparent;}
         100%{background: #2e2e2e;}
+    }
+    @keyframes childColor {
+        0%{background: transparent;}
+        100%{background: gray;}
+    }
+    @keyframes appear {
+        0%{top: 50%;opacity: 0;}
+        50%{opacity: 0;}
+        100%{top: 100%;opacity: 1}
     }
     @keyframes font_act {
         0%{text-shadow: 0px 0px 9px black;}

@@ -29,6 +29,11 @@ const router = createRouter({
           component: () => import("../views/aboutview/AboutView.vue")
         },
         {
+          path: "/pubTalk",
+          name: "pubTalk",
+          component: () => import("../views/talkview/TalkPubView.vue")
+        },
+        {
           path: "/test",
           name: "test",
           component: () => import("../views/testview/test.vue"),
@@ -61,6 +66,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   console.log(from,to)
   if (to.path === '/login') {
+    next();
+  } else if (to.path === '/register'){
     next();
   } else {
     let token = localStorage.getItem('token');

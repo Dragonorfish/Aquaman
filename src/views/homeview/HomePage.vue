@@ -4,7 +4,9 @@
         <div class="bgimg_cover"></div>
         <div class="background2">
             <ToolBar></ToolBar>
-            <router-view class="body"></router-view>
+            <div class="body">
+                <router-view></router-view>
+            </div>
             <Footer></Footer>
         </div>
     </el-scrollbar>

@@ -87,6 +87,7 @@
   let commentText=ref("");
   let loadAlldDisable=ref(true);
   let commentList=ref({});
+  console.log(userInfo.userId)
 
 
   initCommentList()
@@ -139,7 +140,7 @@
       return;
     }
     const queryData={
-      userId:userInfo.id,
+      userId:userInfo.userId,
       familyId:familyId,
       upId:upId,
       level:level,

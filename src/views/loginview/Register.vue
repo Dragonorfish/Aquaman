@@ -30,7 +30,7 @@
                 </div>
                 <el-form-item prop="password">
                     <el-input
-                            v-model="password"
+                            v-model="userPassword"
                             show-password
                             placeholder="密码"
                             @keyup.enter.native="Register" />
@@ -63,7 +63,7 @@
       return{
         userMail:null,
         Vcode:null,
-        password:null,
+        userPassword:null,
         buttonName:"获取验证码",
         count:59,
         disable:false

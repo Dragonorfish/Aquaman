@@ -15,6 +15,12 @@
   </div>
 </template>
 
+
+<style scoped>
+@import "article.css";
+
+</style>
+
 <script setup>
   import { markdownToHtml, markdownToHtmlWithoutLink } from "../../utils/MarkdownUtils";
   import { doActionByAqBack } from "../../utils/ajaxService";
@@ -49,7 +55,7 @@
     const article = ref(await getArticle(queryAriticleData));
     console.log(article.value, articleInfo);
     articleInfo.artContent = markdownToHtml(article.value.artContent.replace(/^(\s|")+|(\s|")+$/g, '')
-      .replace(/\\n/g, '\n'));
+      .replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, "\""));
     articleInfo.userId = article.value.userId;
     articleInfo.artTitle = article.value.artTitle;
     getAuthor({userId:articleInfo.userId})
@@ -84,38 +90,3 @@
   }
 </script>
 
-<style scoped>
-  .article_view_body{
-    display: flex;
-    flex-direction: row;
-  }
-  .title{
-    font-size: 50px;
-    margin: 2%;
-    color: whitesmoke;
-  }
-  .article_box{
-    height: auto;
-
-  }
-  .article_card{
-    color: whitesmoke;
-    padding: 2rem;
-    text-decoration-line: none;
-    font-size:16px;
-    border: 5px solid #00a4a2;
-    border-radius: 20px;
-    box-shadow:0px 0px 20px 0px #00a4a2;
-  }
-  .article_info{
-    width: 300px;
-    margin-top: 7rem;
-    padding-left: 2rem;
-  }
-  @media (max-width: 1080px){
-    .article_info {
-      display: none;
-    }
-  }
-
-</style>

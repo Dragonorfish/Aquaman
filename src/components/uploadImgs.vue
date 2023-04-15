@@ -1,66 +1,20 @@
 <template>
-  <div class="upload_body">
-    <div style="width: 200px;height: 200px">
-      <uploadImg @getImgUrl="getImgUrl"></uploadImg>
-    </div>
-    <button @click="getOrcResult">识别</button>
-  </div>
-  <div class="result_body">
-      <img :src="resultUrl">
-  </div>
+
 </template>
 
 <style scoped>
-.test_body{
-  width: 200px;
-  height: 200px;
-}
-  .result_body img{
-    width: 100%;
-  }
+
 </style>
 
 <script setup>
   import {ref} from "vue";
-  import { getServer } from "../../environment/environment";
-  import { getRandomNum } from "../../utils/utilsService";
-  import cos from "../../utils/COSutils";
+  import { getServer } from "../environment/environment";
+  import { getRandomNum } from "../utils/utilsService";
+  import cos from "../utils/COSutils";
   import { ElMessage } from 'element-plus';
   import 'element-plus/es/components/message/style/css'; // this is only needed if the page also used ElMessage
   import 'element-plus/es/components/message-box/style/css';//还要引入css，抽象
 
-  const imgUrl=ref("");
-  const resultUrl=ref("https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/blogPic/articlePic/168154675042087146");
-
-  function getImgUrl(url){
-    imgUrl.value=url;
-    console.log(url);
-
-  }
-  function getOrcResult() {
-      fetchJson("http://127.0.0.1:6111/orctest?imgUrl="+imgUrl.value,{},"POST").then((response)=>{
-        response.json().then((data)=>{
-          console.log(data);
-          resultUrl.value=data[1];
-        })
-      })
-  }
-
-
-
-
-  function fetchJson(url,bodyData,reqMethod){
-    //发起请求
-    const options={
-      method:reqMethod,
-      body:bodyData,
-      headers:{
-        "Content-Type":"application/x-www-form-urlencoded"
-      }
-    }
-    const promise = fetch(url,options)
-    return promise
-  }
 
   async function uploadFile(e) {
     const file=e.target.files[0];
@@ -85,3 +39,5 @@
 
   }
 </script>
+
+

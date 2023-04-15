@@ -13,6 +13,9 @@ const environment={
       children:{
         articlePic:{
           path:"/blogPic/articlePic"
+        },
+        talkPic:{
+          path:"/blogPic/talkPic"
         }
       }
     },
