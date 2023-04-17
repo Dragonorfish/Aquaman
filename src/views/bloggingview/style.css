@@ -1,9 +1,9 @@
-.mdeditor_body{
+#mdeditor_body {
     display: flex;
     flex-direction: row;
     border: 5px solid #00a4a2;
     border-radius: 20px;
-    box-shadow:0px 0px 20px 0px #00a4a2;
+    box-shadow: 0px 0px 20px 0px #00a4a2;
     height: 45rem;
     padding: 0px;
 }

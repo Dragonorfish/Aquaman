@@ -22,9 +22,9 @@
   /** 总页数 */
   const totalPagesNum = ref(Number(props.total));
   const list=ref([])
-  setCurrentPage("")
+  setCurrentPage("",1,true)
 
-  function setCurrentPage(type, pageNum = 1){
+  function setCurrentPage(type, pageNum = 1,isInit){
     type === "prev" ? currentPage.value-- : type === "next" ? currentPage.value++ : (currentPage.value = Number(pageNum));
     console.log(totalPagesNum.value)
     // 限制页码的边界值，最小为 1，最大不超过总页数
@@ -48,8 +48,10 @@
       list.value=listcopy;
     }
     currentPage.value = currentPage.value < 1 ? 1 : currentPage.value > totalPagesNum.value ? totalPagesNum.value : currentPage.value;
-    emit("pageChange", currentPage.value);
-  };
+    if (!isInit){
+      emit("pageChange", currentPage.value);
+    }
+  }
 
 </script>
 

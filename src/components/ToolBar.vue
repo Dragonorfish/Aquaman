@@ -182,4 +182,19 @@
             display: none;
         }
     }
+    @media (max-width: 780px) {
+        #button8{
+            display: none;
+        }
+        #button6{
+            display: none;
+        }
+        #button5{
+            display: none;
+        }
+        #button4{
+            display: none;
+        }
+
+    }
 </style>

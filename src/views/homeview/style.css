@@ -5,7 +5,7 @@
 }
 .body{
     max-width: 1424px;
-    animation: appear 0.5s ease-out;
+
     margin: auto;
     margin-bottom: 5rem;
     width: 100%;
@@ -14,34 +14,30 @@
     justify-content: center;
     align-items: center;
 }
-@media (max-width: 1024px) {
-    .body{
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
-}
-@keyframes appear {
-    0% {
-        margin-top: 50px;
-        opacity: 0;
-    }
-    100% {
-        margin-top: 0px;
-        opacity: 1;
-    }
-}
 
 .background{
     background-image: url("/src/assets/static/bgpic.jpg");
-    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
     position: absolute;
     width: 100%;
+    height: 100%;
     z-index: -20;
 }
 .background::after{
     width: 100%;
     height: 100%;
     background-color: black;
+}
+@media (max-width: 1024px) {
+    .body{
+        box-sizing: border-box;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .background{
+        background-image: url("/src/assets/static/bgpic.png");
+    }
 }
 .background2{
     background-image: linear-gradient(to bottom,transparent,black,#0B4252,black);

@@ -43,3 +43,33 @@ export function getRandomNum() {
   return new Date().getTime() + '' + Math.round(Math.random() * 100000);
 }
 
+export function throttle(fn, delay = 2000){
+  let timer = null;
+
+  return function() {
+    if (timer) {
+      return;
+    }
+    timer = setTimeout(() => {
+      // @ts-ignore
+      fn.apply(this, arguments)
+      timer = null
+    }, delay)
+  }
+}
+
+export function debounce(fn, delay = 500) {
+  // timer 是在闭包中的
+  let timer = null;
+
+  return function() {
+    if (timer) {
+      return;
+    }
+    timer = setTimeout(() => {
+      // @ts-ignore
+      fn.apply(this, arguments)
+      timer = null
+    }, delay)
+  }
+}

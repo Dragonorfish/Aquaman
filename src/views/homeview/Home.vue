@@ -1,8 +1,8 @@
 <template>
-  <div class="home_body">
+  <div id="home_body" class="page_body">
     <Loading v-if="isLoading"></Loading>
     <div v-if="!isLoading" class="blog_list_body">
-      <h1>文章列表</h1>
+      <h1 id="blog_list_title">文章列表</h1>
       <div class="blog_list">
         <div v-for="item in articleList" :key="item.id" class="blog_item">
           <ArticleItem :articleInfo="item"></ArticleItem>
@@ -34,7 +34,7 @@
       gap: 2rem;
     }
   }
-  .home_body{
+  #home_body{
     display: flex;
     flex-direction: column;
   }
@@ -97,6 +97,10 @@
         pageNum.value=response.data.totalPages;
         currentBlogCount.value=response.data.numberOfElements;
         articleList.value=response.data.content;
+        const target = document.getElementById('blog_list_title');
+        target.scrollIntoView({
+          behavior:"smooth"
+        })
       });
   }
   function initList(queryData){

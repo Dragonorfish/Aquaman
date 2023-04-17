@@ -77,11 +77,7 @@ router.beforeEach((to, from, next) => {
     }else if(to.path==="/"){
       next('/home')
     } else {
-      if (to.matched.length === 0) {
-        next('/login')
-      } else {
         next();
-      }
     }
   }
 });

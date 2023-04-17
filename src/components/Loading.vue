@@ -20,6 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 100;
   }
   .pic{
     background-repeat: no-repeat;

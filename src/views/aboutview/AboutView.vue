@@ -1,5 +1,5 @@
 <template>
-  <div class="about_body">
+  <div id="about_body" class="page_body">
     <div class="about_title">
       海王汇智工作室
     </div>

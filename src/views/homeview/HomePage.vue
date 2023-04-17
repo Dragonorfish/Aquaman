@@ -1,6 +1,6 @@
 <template>
     <el-scrollbar class="home_page" height="100vh">
-        <img src="/src/assets/static/bgpic.jpg" class="background"/>
+        <div class="background"/>
         <div class="bgimg_cover"></div>
         <div class="background2">
             <ToolBar></ToolBar>

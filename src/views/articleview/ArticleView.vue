@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page_body">
     <div class="article_view_body" v-if="!isLoading">
       <div class="article_box" >
         <div class="title">{{articleInfo.artTitle}}</div>

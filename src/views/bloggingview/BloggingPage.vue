@@ -1,5 +1,5 @@
 <template>
-    <div class="mdeditor_body">
+    <div id="mdeditor_body" class="page_body">
         <MdEditor class="md_editor" @getText="getText"></MdEditor>
         <div class="article_options">
             <div class="article_img">
