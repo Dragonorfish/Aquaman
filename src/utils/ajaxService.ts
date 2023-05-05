@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import * as _sh from "lodash";
 import { jsonp } from "vue-jsonp/dist";
 import { Base_HasValue } from "./utilsService";
+import { getServer } from "../environment/environment.js";
 import router from "../router";
 
 export function ajaxPostJsonp(_url, _body) {
@@ -38,29 +39,29 @@ export function ajaxPostJson(_url, _body) {
   // eslint-disable-next-line class-methods-use-this
   const observable = Observable.create((observer) => {
     let options = null;
-    if (localStorage.getItem("token")){
-      options={
+    if (localStorage.getItem("token")) {
+      options = {
         method: "POST",
-          headers: { "content-type": "application/json" ,"token":localStorage.getItem("token")},
+        headers: { "content-type": "application/json", "token": localStorage.getItem("token") },
         url: _url,
-          data: _body,
+        data: _body
       };
-    }else {
-      options={
+    } else {
+      options = {
         method: "POST",
-        headers: { "content-type": "application/json"},
+        headers: { "content-type": "application/json" },
         url: _url,
-        data: _body,
+        data: _body
       };
     }
 
     axios(options)
       .then((response) => {
         // 处理成功情况
-        if (response.data.msg==="token verify fail"){
-          localStorage.removeItem("token")
-          localStorage.removeItem("userInfo")
-          router.push("/login")
+        if (response.data.msg === "token verify fail") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userInfo");
+          router.push("/login");
         }
         observer.next(response);
         observer.complete();
@@ -82,10 +83,10 @@ export function ajaxPostJson(_url, _body) {
   return observable;
 }
 
-export function doActionByAqBack(phttpUrl,pController, pMethod, pQueryData, pBodyData?) {
+export function doActionByAqBack(phttpUrl, pController, pMethod, pQueryData, pBodyData?) {
   const httpUrl = phttpUrl;
   let actionUrl = `/${pController}/${pMethod}`;
-  let queryString = '';
+  let queryString = "";
   if (Base_HasValue(pQueryData)) {
     const params = _sh.keys(pQueryData);
     _sh.each(params, (oneKey) => {

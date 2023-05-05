@@ -1,200 +1,151 @@
 <template>
-    <div class="tool-bar">
-        <div class="logo">
-            <div class="back_logo"></div>
-            <p style="font-weight:500">海王汇智</p>
-            <p style="font-size:25px">cnaquaman</p>
-        </div>
-        <div class="route_buttons">
-            <div class="back_color"></div>
-            <button class="route_button" id="button1" @click="ToHome">首页</button>
-            <button class="route_button" id="button2">说说</button>
-            <button class="route_button" id="button3" @click="ToAbout">关于</button>
-            <button class="route_button" id="button4">搜索</button>
-            <button class="route_button" id="button5">消息</button>
-            <button class="route_button" id="button6">账户</button>
-            <span class="route_button" id="button7">
+  <div class="tool-bar">
+    <div class="logo">
+      <div class="back_logo"></div>
+      <p style="font-weight:500">海王汇智</p>
+      <p style="font-size:25px">cnaquaman</p>
+    </div>
+    <div class="route_buttons">
+      <div class="back_color"></div>
+      <button class="route_button" id="button1" @click="ToHome">首页</button>
+      <button class="route_button" id="button2">说说</button>
+      <button class="route_button" id="button3" @click="ToAbout">关于</button>
+      <div class="search_box">
+        <input placeholder="请输入关键词..." type="text" class="search_input"/>
+        <button class="route_button" id="button4">搜索</button>
+      </div>
+
+      <span class="route_button" id="button7">
                 发布
-                <div id="child_tab">
-                    <button class="route_button" id="button7-1" @click="ToMdEditor" >文章</button>
+                <div class="button_tab" id="child_tab" v-if="pubBoxIsShow">
+                    <button class="route_button" id="button7-1" @click="ToMdEditor">文章</button>
                     <button class="route_button" id="button7-2" @click="ToPubTalk">说说</button>
                 </div>
             </span>
-            <button class="route_button" id="button8" @click="ToTest">测试</button>
-        </div>
+      <button class="route_button" id="button8" @click="ToTest">测试</button>
     </div>
+    <div class="self_box">
+      <div class="button_tab" id="user_tab" v-if="userBoxIsShow">
+        <div class="color_box" id="self_info_box">
+          <div class="self_card">
+            <span class="user_name">{{userInfo.userName}}</span>
+            <div class="user_info">
+              <div class="user_info_item">
+                <span class="info_text_title">文章</span>
+                <span class="info_text">25</span>
+              </div>
+              <div class="user_info_item">
+                <span class="info_text_title" >说说</span>
+                <span class="info_text">11</span>
+              </div>
+              <div class="user_info_item">
+                <span class="info_text_title" >评论</span>
+                <span class="info_text">64</span>
+              </div>
+            </div>
+            <SplitLine></SplitLine>
+          </div>
+        </div>
+      </div>
+      <div class="user_avatar" :style="{backgroundImage:'url('+userInfo.userAVATAR+')'}" id="button6"/>
+    </div>
+  </div>
 </template>
+
+
+<style scoped>
+@import "/src/components/toolBar.css";
+  .self_card{
+    width: 97%;
+    height: 97%;
+    margin: 1.5%;
+    border-radius: 20px;
+    background-color: #2b2b2b;
+    color: powderblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .user_name{
+    font-weight: 900;
+    overflow: hidden;
+    width: 150px;
+    margin-top: 2rem;
+    font-size: 20px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:1;
+    overflow-wrap: break-word;
+
+  }
+</style>
+
 
 <script setup>
   import router from "../router";
-  import MdEditor from "../components/MdEditor.vue"
-  import { onMounted } from "vue"
+  import { nextTick, onMounted, ref } from "vue";
+  import { doActionByAqBack } from "../utils/ajaxService";
+  import { getServer } from "../environment/environment";
 
-  onMounted(()=> {
-      document.getElementById("button7").addEventListener('mouseover', function(e) {
-          document.getElementById("child_tab").style.display="flex"
-      })
-      document.getElementById("button7").addEventListener('mouseleave', function(e) {
-          document.getElementById("child_tab").style.display="none"
-      })
-  })
+  const userInfo = ref({
+    userAVATAR: "src/assets/static/weblogo.png",
+    userName:"admin"
+  });
+  const userBoxIsShow=ref(false);
+  const pubBoxIsShow=ref(false);
+  initUser({ userId: JSON.parse(localStorage.getItem("userInfo")).userId });
 
 
-  function ToHome(){
-    router.push("/home")
+  onMounted(() => {
+    document.getElementById("button7").addEventListener("mouseover", function(e) {
+      pubBoxIsShow.value=!pubBoxIsShow.value;
+    });
+    document.getElementById("button7").addEventListener("mouseleave", function(e) {
+      pubBoxIsShow.value=!pubBoxIsShow.value;
+    });
+    document.querySelector(".self_box").addEventListener("mouseover", function(e) {
+      document.querySelector(".user_avatar").className="user_avatar_hover";
+      userBoxIsShow.value=!userBoxIsShow.value;
+    });
+    document.querySelector(".self_box").addEventListener("mouseleave", function(e) {
+      document.querySelector(".user_avatar_hover").className="user_avatar";
+      userBoxIsShow.value=!userBoxIsShow.value;
+    });
+    document.querySelector(".search_input").addEventListener("focus", function(e) {
+    });
+
+  });
+
+  function initUser(queryData) {
+    doActionByAqBack(
+      getServer().aquamanBackDev,
+      "AqUserController",
+      "getAuthor",
+      queryData
+    ).subscribe((response) => {
+      userInfo.value = response.data;
+      console.log(userInfo.value)
+    });
   }
-  function ToMdEditor(){
-    router.push("/bloggingPage")
+
+  function ToHome() {
+    router.push("/home");
   }
-  function ToPubTalk(){
-      router.push("/pubTalk")
+
+  function ToMdEditor() {
+    router.push("/bloggingPage");
   }
-  function ToTest(){
-      router.push("/test")
+
+  function ToPubTalk() {
+    router.push("/pubTalk");
   }
-  function ToAbout(){
-      router.push("/about")
+
+  function ToTest() {
+    router.push("/test");
+  }
+
+  function ToAbout() {
+    router.push("/about");
   }
 </script>
-
-<style scoped>
-    .tool-bar{
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        justify-content: start;
-        align-items: center;
-        width: 100%;
-        max-width: 1524px;
-        animation: appear 0.5s ease-out;
-        margin-left: auto;
-        margin-right: auto;
-        height: 200px;
-        padding-left: 3rem;
-    }
-    .logo{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-right: 40px;
-        position: relative;
-    }
-    .back_logo{
-        background-image: url("../assets/static/weblogo.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: absolute;
-        height: 192px;
-        width: 256px;
-        opacity: 0.2;
-    }
-    .logo p{
-
-        color: darkturquoise;
-        font-family:Microsoft Yahei;
-        font-size:35px;
-        font-weight: 900;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        text-shadow: 2px 2px 10px black;
-        animation: font_act 1s linear 0s infinite alternate;
-    }
-    .route_buttons{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        height:60px ;
-        position: relative;
-    }
-    .back_color{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        border-radius: 30px;
-        opacity: 0.3;
-
-    }
-    .route_button{
-        height: 40px;
-        width: 4rem;
-        background: transparent;
-        font-size: 16px;
-        color: whitesmoke;
-        margin: 5px;
-        border: transparent;
-        border-radius: 20px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        z-index: 1;
-    }
-    .route_button:hover{
-        background: #2e2e2e;
-        animation: color 0.4s ease-out;
-
-    }
-    #button7{
-        position: relative;
-        font-weight: 600;
-        opacity: 0.8;
-    }
-    #child_tab{
-        background-color: #2e2e2e;
-        padding: 5px;
-        position: absolute;
-        border-radius: 15px;
-        top:100%;
-        display: none;
-        flex-direction: column;
-        animation: appear 0.4s ease-out;
-    }
-    #button7-1:hover{
-        background-color: gray;
-        animation: childColor 0.4s ease-out;
-    }
-    #button7-2:hover{
-        background-color: gray;
-        animation: childColor 0.4s ease-out;
-    }
-    @keyframes color {
-        0%{background: transparent;}
-        100%{background: #2e2e2e;}
-    }
-    @keyframes childColor {
-        0%{background: transparent;}
-        100%{background: gray;}
-    }
-    @keyframes appear {
-        0%{top: 50%;opacity: 0;}
-        50%{opacity: 0;}
-        100%{top: 100%;opacity: 1}
-    }
-    @keyframes font_act {
-        0%{text-shadow: 0px 0px 9px black;}
-        100%{text-shadow: 0px 0px 13px black;}
-    }
-    @media (max-width: 1080px) {
-        #button7{
-            display: none;
-        }
-    }
-    @media (max-width: 780px) {
-        #button8{
-            display: none;
-        }
-        #button6{
-            display: none;
-        }
-        #button5{
-            display: none;
-        }
-        #button4{
-            display: none;
-        }
-
-    }
-</style>

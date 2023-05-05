@@ -77,7 +77,11 @@ router.beforeEach((to, from, next) => {
     }else if(to.path==="/"){
       next('/home')
     } else {
+      if (to.matched.length === 0) {
+        next('/404')
+      } else {
         next();
+      }
     }
   }
 });

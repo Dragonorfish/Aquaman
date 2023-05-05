@@ -4,6 +4,15 @@
   margin: 0px;
 }
 
-*{
-  box-sizing: border-box;
+.page_body{
+  animation: appear 0.3s ease-out;
+}
+.color_box{
+  background-image: linear-gradient(to right top,aquamarine,aquamarine,orange);
+  height: auto;
+  border-radius: 25px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

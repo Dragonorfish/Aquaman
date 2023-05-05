@@ -1,6 +1,5 @@
 <template>
-  <div class="userInfo_box">
-
+  <div id="userInfo_box" class="color_box">
     <div class="avatar_box">
       <img :src="author.userAVATAR" class="avatar"/>
       <span class="author_name">{{author.userName}}</span>
@@ -31,15 +30,8 @@
 </script>
 
 <style scoped>
-  .userInfo_box{
-    background-image: linear-gradient(to right top,aquamarine,aquamarine,orange);
+  #userInfo_box{
     min-width: 300px;
-    height: auto;
-    border-radius: 25px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
   }
   .avatar_box{
     width: 100%;
@@ -87,7 +79,6 @@
     opacity: 1;
     left: 1%;
     bottom: 0.6%;
-    z-index: 0;
   }
   .person_sign{
     height: auto;

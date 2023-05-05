@@ -95,6 +95,7 @@
   const resultUrl=ref("");
   const resultList=ref([]);
   const currentList=ref([]);
+  let currentBigImg={};
   const resultElementList=[];
   const isOrcing=ref(false)
   let imgRatio=1;
@@ -142,10 +143,26 @@
           Element.addEventListener("mouseenter",()=> {
             currentList.value = resultList.value.filter(resultItem => resultItem[1][1] + '' === item[1][1] + '');
             Element.style.border = "1px red solid";
+            const imgPart=document.createElement('div');
+            imgPart.style.top=item[0][0][1]*imgRatio+"px";
+            imgPart.style.left=item[0][2][0]*imgRatio+"px";
+            imgPart.style.width=(item[0][2][0]-item[0][0][0])+"px";
+            imgPart.style.height=(item[0][2][1]-item[0][0][1])+"px";
+            imgPart.style.position="absolute";
+            imgPart.style.overflow="hidden";
+            const imgBox=document.createElement('img');
+            imgBox.src=resultUrl.value;
+            imgBox.style.top=-item[0][0][1]+"px";
+            imgBox.style.left=-item[0][0][0]+"px";
+            imgBox.style.position="absolute";
+            imgPart.appendChild(imgBox);
+            imgElement.appendChild(imgPart);
+            currentBigImg=imgPart;
           });
           Element.addEventListener("mouseleave",()=> {
             currentList.value = resultList.value;
             Element.style.border = "1px blue solid";
+            imgElement.removeChild(currentBigImg);
           })
           resultElementList.push(Element);
           imgElement.appendChild(Element);
@@ -160,11 +177,13 @@
 
   function fetchJson(url,bodyData,reqMethod){
     //发起请求
+    const headers=new Headers();
+    headers.append("token",localStorage.getItem("token"))
     const options={
       method:reqMethod,
       body:bodyData,
       headers:{
-        "Content-Type":"application/x-www-form-urlencoded"
+        "Content-Type":"application/x-www-form-urlencoded",
       }
     }
     const promise = fetch(url,options)

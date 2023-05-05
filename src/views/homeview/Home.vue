@@ -17,14 +17,18 @@
   .blog_list{
     position: relative;
     display: grid;
-    grid-template-columns:repeat(2,49%);
+    grid-template-columns:repeat(2,48%);
     gap: 2rem;
-
+    margin-left: 1%;
   }
   .blog_list_body{
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+  #blog_list_title{
+    margin: 1rem;
+    padding-bottom: 1rem;
   }
   @media (max-width: 1024px) {
     .blog_list{
@@ -50,7 +54,7 @@
     margin: 2rem;
     margin-left: 0;
     position: relative;
-    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
   }
   h1::after{
     border-radius: 9999px;
@@ -87,6 +91,7 @@
   })
 
   function pageChange(page){
+
     queryData.page=page-1;
       doActionByAqBack(
         getServer().aquamanBackDev,

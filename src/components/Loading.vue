@@ -13,47 +13,66 @@
 </script>
 
 <style scoped>
-  .loading_body{
+  .loading_body {
     width: 100%;
     height: 40rem;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 90;
   }
-  .pic{
+
+  .pic {
     background-repeat: no-repeat;
     background-size: cover;
     width: 25rem;
     height: 25rem;
     position: absolute;
   }
-  #pic1{
+
+  #pic1 {
     background-image: url("https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/u1026.png");
     animation: rotate1 10s linear infinite;
 
   }
-  #pic2{
+
+  #pic2 {
     background-image: url("https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/u1066.png");
     animation: rotate2 15s linear infinite;
 
   }
-  #pic3{
+
+  #pic3 {
     background-image: url("https://aquaman-1314140460.cos.ap-beijing.myqcloud.com/aquamanIcon/u1027.png");
     animation: rotate3 40s linear infinite;
 
   }
+
   @keyframes rotate1 {
-    0%{-webkit-transform:rotate(0deg);}
-    100%{-webkit-transform:rotate(360deg);}
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
   }
+
   @keyframes rotate2 {
-    0%{-webkit-transform:rotate(0deg);}
-    100%{-webkit-transform:rotate(-360deg);}
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(-360deg);
+    }
   }
+
   @keyframes rotate3 {
-    0%{-webkit-transform:rotate(0deg);}
-    100%{-webkit-transform:rotate(360deg);}
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
   }
 </style>

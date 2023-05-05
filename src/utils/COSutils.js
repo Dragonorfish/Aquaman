@@ -18,7 +18,7 @@ const cos = new COS({
     // 服务端其他语言参考 COS STS SDK ：https://github.com/tencentyun/qcloud-cos-sts-sdk
     // STS 详细文档指引看：https://cloud.tencent.com/document/product/436/14048
 
-    var url ='http://127.0.0.1:8080/WebApi/AqCOSController/getTmpSecret'; // url 替换成您自己的后端服务
+    var url =getServer().aquamanBackDev+'/AqCOSController/getTmpSecret'; // url 替换成您自己的后端服务
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
     xhr.onload = function (e) {

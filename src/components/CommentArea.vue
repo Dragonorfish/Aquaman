@@ -296,6 +296,10 @@
     .comment_info button{
       background-color: transparent;
       border:none;
+      margin: 0;
+      padding: 0;
+      width: auto;
+      height: auto;
       color: aquamarine;
       position: absolute;
       right: 0;

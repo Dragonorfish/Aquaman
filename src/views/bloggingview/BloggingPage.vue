@@ -24,7 +24,6 @@ import AvaUpload from "../../components/UploadImg.vue"
 import { Observable } from "rxjs";
 import {ref} from 'vue';
 import { doActionByAqBack } from "../../utils/ajaxService";
-import { getServer } from "../../environment/environment";
 import { ElMessage } from 'element-plus';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';

@@ -3,8 +3,11 @@
   <div class="shape">
     <div class="moon">
       <div class="corona">
-          <span  title="404">
+          <span style="display:flex;flex-direction: column"  title="404">
             404
+            <div class="back_to_home" @click="backToHome">
+              返回首页
+            </div>
           </span>
       </div>
     </div>
@@ -13,7 +16,10 @@
 </template>
 
 <script setup>
-
+  import router from "../../router";
+  function backToHome() {
+    router.push("/home")
+  }
 </script>
 
 <style scoped>
@@ -52,6 +58,11 @@
     font-family: 'Fira Mono', monospace;
     letter-spacing: -7px;
     animation: glitch 1s linear infinite;
+  }
+  .back_to_home{
+    font-size: 30px;
+    text-align: center;
+    cursor: url("src/assets/pointer1.cur"),auto;
   }
 
   @keyframes glitch {

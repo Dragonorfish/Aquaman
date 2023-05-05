@@ -41,7 +41,12 @@
 
 #save_article{
     background-color: #e6a23c;
+    margin: 0.6rem;
+}
 
+#pub_article{
+    opacity: 1;
+    margin: 0.6rem;
 }
 #save_article:hover{
     opacity: 1;
@@ -55,5 +60,5 @@
     border: 2px solid #00a4a2;
 }
 .img_uploader:hover{
-    border: 2px solid aquamarine;
+    border: 2px solid darkseagreen;
 }

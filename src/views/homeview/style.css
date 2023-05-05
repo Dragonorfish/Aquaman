@@ -53,5 +53,5 @@
     height: 100%;
     z-index: -10;
     position: absolute;
-    background-image: linear-gradient(to bottom,transparent,black);
+    background-image: linear-gradient(to bottom,transparent,black 70%);
 }

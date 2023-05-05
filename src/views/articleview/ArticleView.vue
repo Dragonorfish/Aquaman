@@ -2,7 +2,7 @@
   <div class="page_body">
     <div class="article_view_body" v-if="!isLoading">
       <div class="article_box" >
-        <div class="title">{{articleInfo.artTitle}}</div>
+        <div class="title" id="article_title">{{articleInfo.artTitle}}</div>
         <div class="article_card" ref="articleCard" v-html="articleInfo.artContent">
         </div>
         <CommentArea :familyId="articleInfo.id" style="width: 100%;margin-top: 4rem"></CommentArea>
@@ -26,7 +26,7 @@
   import { doActionByAqBack } from "../../utils/ajaxService";
   import { getServer } from "../../environment/environment";
   import { useRoute } from 'vue-router';
-  import {ref,reactive,onMounted} from "vue"
+  import {ref,reactive,nextTick,onMounted} from "vue"
   import CommentArea from "../../components/CommentArea.vue"
   import router from "../../router";
   import UserInfoItem from "../../components/UserInfoItem.vue"
@@ -44,8 +44,13 @@
     artContent:"",
   })
   let author=ref({})
-  initArticle();
+
   console.log(articleInfo.userId)
+
+  onMounted(()=>{
+    initArticle();
+
+  })
 
 
   async function initArticle() {
@@ -58,7 +63,7 @@
       .replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\"/g, "\""));
     articleInfo.userId = article.value.userId;
     articleInfo.artTitle = article.value.artTitle;
-    getAuthor({userId:articleInfo.userId})
+    getAuthor({userId:articleInfo.userId});
   }
 
 
@@ -86,6 +91,11 @@
     ).subscribe((response) => {
       author.value=response.data;
       isLoading.value=!isLoading.value
+      nextTick(()=>{
+        document.getElementById("article_title").scrollIntoView({
+          behavior:"smooth"
+        })
+      })
     });
   }
 </script>

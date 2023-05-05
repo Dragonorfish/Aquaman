@@ -110,7 +110,7 @@
     align-items: center;
     font-size: 20px;
     color: aqua;
-    z-index: 200;
+    z-index: 20;
     pointer-events: none;
   }
 </style>
