@@ -2,7 +2,7 @@
   <div id="talk_pub_body" class="page_body">
     <h2>发布说说</h2>
     <textarea placeholder="请说些什么吧..." class="talk_pub_card" v-model="talkText"></textarea>
-    <uploadImgs class="imgs_upload" :imgList="imgList" @getImgList="getImgList"></uploadImgs>
+    <uploadImgs class="imgs_upload" @getImgList="getImgList"></uploadImgs>
     <button class="talk_pub_button" @click="pubTalk">发布</button>
   </div>
 </template>
@@ -55,7 +55,7 @@
   let userInfo=JSON.parse(localStorage.getItem("userInfo"))
 
   function getImgList(imgs) {
-      imgList.value=imgs.map(img=>img.url)
+    imgList.value=imgs.map(img=>img.url)
   }
 
   function pubTalk() {
@@ -70,11 +70,11 @@
       userId:userInfo.userId
     }
     doActionByAqBack(
-      getServer().aquamanBackDev,
-      "AqTalkController",
-      "addTalk",
-      queryData,
-      {talkContent:talkText.value,picList:imgList.value}
+            getServer().aquamanBackDev,
+            "AqTalkController",
+            "addTalk",
+            queryData,
+            {talkContent:talkText.value,picList:imgList.value}
     ).subscribe((response) => {
       if (["ERR_NETWORK", "ERR_BAD_RESPONSE"].indexOf(_sh.get(response,"code", null))!==-1){
         ElMessage.error("网络或服务器波动，说说发布失败");

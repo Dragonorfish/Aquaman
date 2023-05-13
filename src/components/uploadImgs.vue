@@ -1,11 +1,12 @@
 <template>
   <div>
     <el-upload
-        v-model:file-list="imgList"
-        list-type="picture-card"
-        :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove"
-        :before-upload="beforeUpload"
+            v-model:file-list="fileList"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :before-upload="beforeUpload"
+            :on-change="onChange"
     >
       <el-icon><Plus /></el-icon>
     </el-upload>
@@ -34,19 +35,22 @@
 
   const dialogImageUrl = ref('');
   const dialogVisible = ref(false);
-  const emits=defineEmits(["getImgList"])
-  const props=defineProps({
-    imgList:{ type: [Array], default: [] }
-  })
+  const emits=defineEmits(["getImgList"]);
+  const fileList=ref([]);
+  const imgList=ref([]);
 
 
   const handleRemove = (uploadFile, uploadFiles) => {
+    // console.log(uploadFile, uploadFiles);
+  }
+
+  const onChange=(uploadFile, uploadFiles) => {
     console.log(uploadFile, uploadFiles);
   }
 
   const handlePictureCardPreview= (uploadFile) => {
     dialogImageUrl.value = uploadFile.url;
-      dialogVisible.value = true;
+    dialogVisible.value = true;
   }
 
 
@@ -69,6 +73,18 @@
         SliceSize: 1024 * 1024 * 5,     /* 触发分块上传的阈值，超过5MB 使用分块上传，小于5MB使用简单上传。可自行设置，非必须 */
       }).then((res)=> {
         imgList.value.push({ name:fileName,url:"https://"+res.Location});
+        fileList.value.push(
+                {
+                  name:file.name,
+                  percentage:100,
+                  raw:file,
+                  size:file.size,
+                  status:"done",
+                  uid:file.uid,
+                  url:"https://"+res.Location
+                }
+        )
+        console.log(imgList)
       }).catch((error)=>{
         ElMessage.error('文件错误，上传失败')
       })
@@ -79,7 +95,7 @@
 
   }
 
-  watch(props.imgList,()=>{
+  watch(imgList.value,()=>{
     emits("getImgList",imgList.value);
   })
 </script>
