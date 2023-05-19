@@ -46,7 +46,6 @@
 
 .article_card pre code{
   position: relative;
-
 }
 
 .article_card a{
@@ -63,8 +62,11 @@
   color: whitesmoke;
 }
 .article_box{
+  width: 75%;
+  display: flex;
+  flex-direction: column;
   height: auto;
-
+  flex: auto;
 }
 .article_card{
   color: whitesmoke;
