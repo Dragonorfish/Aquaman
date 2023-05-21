@@ -1,5 +1,7 @@
 @import "./base.css";
 @import "../views/articleview/article.css";
+@import "imgPreStyle.css";
+
 
 html,
 body {

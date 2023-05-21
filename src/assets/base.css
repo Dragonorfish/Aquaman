@@ -7,6 +7,7 @@
 .page_body{
   animation: appear 0.3s ease-out;
   width: 100%;
+  position: relative;
 }
 .color_box{
   background-image: linear-gradient(to right top,aquamarine,aquamarine,orange);

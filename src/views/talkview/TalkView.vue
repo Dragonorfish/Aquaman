@@ -1,24 +1,27 @@
 <template>
     <div id="talk_body" class="page_body">
         <h1 class="page_title">说说</h1>
-        <Loading v-if="isLoading"></Loading>
-        <div class="talk_main">
+        <Loading v-if="isLoading" style="width:100%;height:100vh"></Loading>
+        <div v-if="!isLoading" class="talk_main">
             <div class="talk_list">
-                <div class="talk_item" v-for="(item,index) in talkList">
+                <div class="talk_item" v-for="(item,index) in talkList" :id="item.id">
                     <div class="talk_info">
                         <img :src="item.userAvatar" class="avatar"/>
                         <span id="user_name" class="info_text">{{item.userName}}</span>
                         <span id="pub_time" class="info_text">发布于 {{item.addTime}}</span>
                     </div>
                     <div class="talk_content">
-                        <div class="talk_text">{{item.talkContent}}</div>
+                        <div class="talk_text">
+                            {{item.talkContent}}
+                            <div class="talk_text_cover"></div>
+                        </div>
                         <div class="talk_imgs">
                             <div :class="item.talkPicList.length===1?
                                  'one_img':item.talkPicList.length===2?
                                  'two_img':'more_img'"
                             >
                                 <div class="img_box" v-for="img in item.talkPicList">
-                                    <img class="img_item"  :src="img"/>
+                                    <AqImage :url="img"/>
                                 </div>
                             </div>
                         </div>
@@ -44,25 +47,29 @@
         padding: 10px;
         box-sizing: border-box;
     }
-    .talk_main{
+
+    .talk_main {
         display: flex;
         flex-direction: row;
         flex: auto;
-        backdrop-filter:blur(15px);
+        backdrop-filter: blur(15px);
     }
-    .talk_list{
+
+    .talk_list {
         display: flex;
         flex-direction: column;
         flex: 4;
         margin-right: 4rem;
         margin-top: 1rem;
     }
-    #side_part{
+
+    #side_part {
         width: 300px;
         height: 400px;
-        background-image: linear-gradient(to right bottom , orange,#00a4a2);
+        background-image: linear-gradient(to right bottom, orange, #00a4a2);
     }
-    .talk_item{
+
+    .talk_item {
         width: 100%;
         min-height: 80px;
         background-color: #2e2e2e;
@@ -74,10 +81,12 @@
         margin-bottom: 1rem;
         transition: transform 0.3s;
     }
-    .talk_item:hover{
+
+    .talk_item:hover {
         transform: scale(1.005);
     }
-    .avatar{
+
+    .avatar {
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;
@@ -86,76 +95,97 @@
         grid-row-start: 1;
         grid-row-end: 3;
     }
-    .talk_info{
+
+    .talk_info {
         display: grid;
         grid-template-columns: 2.5rem auto;
         grid-template-rows: 1.25rem 1.25rem;
         width: 100%;
     }
-    .info_text{
+
+    .info_text {
         margin-left: 1rem;
     }
-    #user_name{
+
+    #user_name {
         font-size: 16px;
         font-weight: 600;
         color: whitesmoke;
         font-style: normal;
         opacity: 0.8;
     }
-    #pub_time{
+
+    #pub_time {
         font-size: 14px;
         color: grey;
         font-style: italic;
 
     }
-    .talk_content{
+
+    .talk_content {
         width: 100%;
         min-height: 50px;
         margin-top: 10px;
         position: relative;
     }
-    .talk_text{
+
+    .talk_text {
         width: 100%;
         color: whitesmoke;
-        margin-left: 2.5rem;
+        padding-left: 2.5rem;
+        box-sizing: border-box;
+        white-space: pre-wrap;
+        max-height: 250px;
+        overflow: hidden;
     }
-    .talk_imgs{
+
+    .talk_text_cover {
+        width: calc(100% - 2.5rem);
+        height: 150px;
+        background-image: linear-gradient(to bottom,transparent,#2e2e2e);
+        position: absolute;
+        top: 250px;
+        transform: translateY(-100%);
+    }
+
+    .talk_imgs {
         margin-top: 1rem;
         width: 80%;
         margin-left: 2.5rem;
     }
-    .one_img{
+
+    .one_img {
         width: 100%;
     }
-    .two_img{
+
+    .two_img {
         display: grid;
-        grid-template-columns: repeat(2,49%);
+        grid-template-columns: repeat(2, 49%);
         grid-gap: 1%;
     }
-    .more_img{
+
+    .more_img {
         display: grid;
-        grid-template-columns: repeat(3,33%);
+        grid-template-columns: repeat(3, 33%);
         grid-gap: 0.5%;
     }
-    .img_box{
-        width: 100%;
-        height: 100%;
-        background-color: #2b2b2b;
-        transition: transform 0.3s;
-    }
-    .img_box:hover{
-        transform: scale(1.02);
-        cursor: url("../../assets/pointer1.cur"),auto;
-    }
-    .img_item{
+
+    .img_box {
         width: 100%;
         height: 100%;
         max-height: 40rem;
         min-height: 10rem;
-        object-fit: contain;
+        background-color: #2b2b2b;
+        transition: transform 0.3s;
     }
+
+    .img_box:hover {
+        transform: scale(1.02);
+        cursor: url("../../assets/pointer1.cur"), auto;
+    }
+
     @media (max-width: 1024px) {
-        #side_part{
+        #side_part {
             display: none;
         }
     }
@@ -186,12 +216,12 @@
     ).subscribe((response) => {
       pageNum.value = response.data.totalPage;
       talkList.value = response.data.content;
-      changeLoadingState()
+      changeLoadingState();
     });
   }
 
   function pageChange(page) {
-    console.log(page)
+    console.log(page);
     queryData.page = page - 1;
     doActionByAqBack(
       getServer().aquamanBackDev,
@@ -202,10 +232,10 @@
       pageNum.value = response.data.totalPage;
       talkList.value = response.data.content;
 
-      // const target = document.getElementById("blog_list_title");
-      // target.scrollIntoView({
-      //   behavior: "smooth"
-      // });
+      const target = document.getElementsByClassName("page_title")[0];
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
     });
   }
 
