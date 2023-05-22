@@ -142,7 +142,7 @@
     .talk_text_cover {
         width: calc(100% - 2.5rem);
         height: 150px;
-        background-image: linear-gradient(to bottom,transparent,#2e2e2e);
+        background-image: linear-gradient(to bottom, transparent, #2e2e2e);
         position: absolute;
         top: 250px;
         transform: translateY(-100%);

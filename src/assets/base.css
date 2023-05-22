@@ -38,3 +38,7 @@
   background-image: linear-gradient(to right, aquamarine, orange);
   left: 0;
 }
+.text_link{
+  color: aqua;
+  text-decoration-line: none;
+}
