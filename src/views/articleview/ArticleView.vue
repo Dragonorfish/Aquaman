@@ -31,10 +31,6 @@
   import router from "../../router";
   import UserInfoItem from "../../components/UserInfoItem.vue";
 
-
-  const props = defineProps({
-    id: String
-  });
   const route = useRoute();
   let isLoading = ref(true);
   let articleInfo = reactive({
@@ -44,9 +40,6 @@
     artContent: ""
   });
   let author = ref({});
-
-  console.log(articleInfo.userId);
-
   onMounted(() => {
     initArticle();
 
@@ -58,7 +51,6 @@
       id: articleInfo.id
     };
     const article = ref(await getArticle(queryAriticleData));
-    console.log(article.value, articleInfo);
     articleInfo.artContent = markdownToHtml(article.value.artContent.replace(/^(\s|")+|(\s|")+$/g, "")
       .replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\"/g, "\""));
     articleInfo.userId = article.value.userId;

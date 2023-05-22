@@ -42,7 +42,12 @@ const router = createRouter({
           path: "/talk",
           name: "talk",
           component: () => import("../views/talkview/TalkView.vue"),
-        }
+        },
+        {
+          path: "/talkdetail/:id",
+          name: "talkdetail",
+          component: () => import("../views/talkview/TalkDetailView.vue"),
+        },
       ]
     },
     {
