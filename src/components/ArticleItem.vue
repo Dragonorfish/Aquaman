@@ -166,6 +166,7 @@
     opacity: 0.7;
   }
   .pub_time{
+    display: flex;
     margin-left: 3rem;
     color: gray;
     font-size: 13px;

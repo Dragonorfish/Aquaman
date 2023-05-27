@@ -57,18 +57,16 @@
         grid-row-end: 3;
     }
 
-    .talk_info {
+    .talk_info{
         display: grid;
         grid-template-columns: 4rem auto;
         grid-template-rows: 2rem 2rem;
-        width: 100%;
+        width: calc(100% - 2.5rem);
         margin-left: 2.5rem;
         margin-bottom: 2rem;
     }
-
     .info_text {
         margin-left: 1rem;
-        line-height: 2rem;
     }
 
     #user_name {

@@ -39,6 +39,14 @@
   left: 0;
 }
 .text_link{
+  overflow-wrap: break-word;
   color: aqua;
   text-decoration-line: none;
+}
+
+.content_marker{
+  background-color: aquamarine;
+}
+.title_marker{
+  background-color: orangered;
 }

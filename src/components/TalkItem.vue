@@ -60,6 +60,9 @@
         grid-template-rows: 1.25rem 1.25rem;
         width: 100%;
     }
+    @media  {
+
+    }
 
     .info_text {
         margin-left: 1rem;

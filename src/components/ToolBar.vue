@@ -1,5 +1,5 @@
 <template>
-    <div class="tool-bar">
+    <div class="tool_bar">
         <div class="logo">
             <div class="back_logo"></div>
             <p style="font-weight:500">海王汇智</p>

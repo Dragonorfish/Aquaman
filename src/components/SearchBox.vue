@@ -2,11 +2,12 @@
     <div class="search_box">
         <input v-model="searchWord" placeholder="请输入关键词..." type="text" @focus="changeFocus" @blur="changeFocus" class="search_input"/>
         <button class="route_button" id="button4" @click="">搜索</button>
-        <div v-if="searchResult.length>0&&isFocus" class="search_result">
+
+        <div v-if="searchResult.length>0&&isFocus"  class="search_result">
             <div class="search_result_item" v-for="resultItem in searchResult" :key="resultItem.id" @click="toArticle(resultItem.id)">
                 <div class="result_item_box">
                     <div class="result_item_title" v-html="resultItem.artTitle"></div>
-                    <div class="result_item_content">{{resultItem.artContent}}</div>
+                    <div class="result_item_content" v-html="resultItem.artContent"></div>
                     <div class="result_item_info">
                         <img class="result_item_avatar" :src="resultItem.authorAvatar"/>
                         <div class="result_item_name">{{resultItem.authorName}}</div>
@@ -67,7 +68,7 @@
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 100%;
+        top: 110%;
         z-index: 100;
         overflow: auto;
         backdrop-filter: blur(10px);
@@ -127,7 +128,7 @@
         transition: all 0.3s;
     }
     .search_result_item:hover::after{
-        width: 94%;
+        width: 100%;
         box-shadow: 0 5px 5px 0 #00a4a2;
     }
 
@@ -145,7 +146,7 @@
     }
 
     .search_result_item:hover::before{
-        width: 94%;
+        width: 100%;
         box-shadow: 0 -5px 5px 0 #00a4a2;
     }
     .result_item_box{
@@ -177,6 +178,7 @@
         font-weight: 600;
         font-size: 14px;
     }
+
     @keyframes searchBoxPull {
         0%{
             height: 0px;
@@ -213,6 +215,7 @@
 
   function changeFocus() {
     if (isFocus.value===true){
+      searchWord.value=""
       setTimeout(()=>{
         isFocus.value=false;
       },200)
@@ -239,7 +242,24 @@
       "getArticleByWord",
       queryData
     ).subscribe((response) => {
-        searchResult.value=response.data
+      const reg=new RegExp(searchWord.value,"gi")
+      searchResult.value=response.data.map((resultItem)=>{
+        let index=resultItem.artContent.search(reg)
+        resultItem.artTitle=resultItem.artTitle.replace(reg,"<marker class='title_marker'>"+searchWord.value+"</marker>")
+        console.log(index,resultItem.artContent.length)
+        if (index<20&&resultItem.artContent.length-searchWord.value.length-index<30){
+          resultItem.artContent=resultItem.artContent.replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+        }else if(index<20){
+          resultItem.artContent=resultItem.artContent.slice(0,searchWord.value.length+index+30+20-index).replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+        }else if(resultItem.artContent.length-index-searchWord.value.length<30){
+          resultItem.artContent=resultItem.artContent.slice(index-20-(30-resultItem.artContent.length+index+searchWord.value.length),resultItem.artContent.length).replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+        }else {
+          resultItem.artContent=resultItem.artContent.slice(index-20,index+30).replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+        }
+
+        return resultItem
+      })
+
       console.log(response.data)
     });
   }
