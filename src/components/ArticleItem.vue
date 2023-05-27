@@ -95,7 +95,7 @@
     text-decoration: none;
     font-size:1.5rem;
     font-weight: 900;
-    width: 100%;
+    width: 90%;
     height: 15%;
     margin-left: 1rem;
     padding-top: 2rem;
@@ -172,4 +172,11 @@
     position: absolute;
     bottom: 1rem;
   }
+  @media (max-width: 500px) {
+    .artIntroduction{
+      -webkit-line-clamp:3;
+    }
+
+  }
+
 </style>

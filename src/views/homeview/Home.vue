@@ -74,6 +74,12 @@
         background-image: linear-gradient(to right, aquamarine, orange);
         left: 0;
     }
+    @media (max-width: 500px) {
+        .blog_item{
+            height: 220px;
+        }
+
+    }
 </style>
 
 

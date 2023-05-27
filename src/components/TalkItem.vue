@@ -28,7 +28,7 @@
 
 <style scoped>
     .talk_item {
-        width: 100%;
+        width:100%;
         min-height: 80px;
         background-color: #2e2e2e;
         display: flex;

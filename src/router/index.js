@@ -22,6 +22,7 @@ const router = createRouter({
           path: "/article/:id",
           name: "article",
           component: () => import("../views/articleview/ArticleView.vue"),
+          props: (route) => ({articleId: route.params.id})
         },
         {
           path: "/about",
@@ -74,7 +75,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(from,to)
   if (to.path === '/login') {
     next();
   } else if (to.path === '/register'){

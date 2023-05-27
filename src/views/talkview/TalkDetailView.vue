@@ -95,7 +95,8 @@
 
     .talk_text {
         width: 100%;
-        font-size: 18px;
+        font-size: 20px;
+        line-height: 30px;
         color: whitesmoke;
         padding-left: 2.5rem;
         box-sizing: border-box;

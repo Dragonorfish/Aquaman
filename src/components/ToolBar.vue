@@ -10,10 +10,8 @@
             <button class="route_button" id="button1" @click="ToHome">首页</button>
             <button class="route_button" id="button2" @click="ToTalk">说说</button>
             <button class="route_button" id="button3" @click="ToAbout">关于</button>
-            <div class="search_box">
-                <input placeholder="请输入关键词..." type="text" class="search_input"/>
-                <button class="route_button" id="button4">搜索</button>
-            </div>
+
+            <SearchBox></SearchBox>
 
             <span class="route_button" id="button7">
                 发布
@@ -89,6 +87,7 @@
   import { nextTick, onMounted, ref } from "vue";
   import { doActionByAqBack } from "../utils/ajaxService";
   import { getServer } from "../environment/environment";
+  import {debounce} from "../utils/utilsService.ts"
 
   const userInfo = ref({
     userAVATAR: "src/assets/static/weblogo.png",
@@ -96,6 +95,7 @@
   });
   const userBoxIsShow = ref(false);
   const pubBoxIsShow = ref(false);
+
   initUser({ userId: JSON.parse(localStorage.getItem("userInfo")).userId });
 
 
@@ -113,8 +113,6 @@
     document.querySelector(".self_box").addEventListener("mouseleave", function(e) {
       document.querySelector(".user_avatar_hover").className = "user_avatar";
       userBoxIsShow.value = false;
-    });
-    document.querySelector(".search_input").addEventListener("focus", function(e) {
     });
 
   });

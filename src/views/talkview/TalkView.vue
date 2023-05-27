@@ -40,6 +40,7 @@
         flex: 4;
         margin-right: 4rem;
         margin-top: 1rem;
+        width: 100%;
     }
 
     #side_part {

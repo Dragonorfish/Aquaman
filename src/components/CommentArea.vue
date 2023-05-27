@@ -169,10 +169,10 @@
     .comment_body{
       width: 100%;
       height: auto;
-      background-color:transparent;
       border-radius: 30px;
-      box-shadow:0px 0px 20px 0px #00a4a2;
+      box-shadow:0px 0px 0px 0px #00a4a2;
       border: 1px transparent solid;
+      background-color: #2b2b2b;
     }
     h1{
       position: relative;
@@ -208,15 +208,15 @@
   }
   .comment_input{
     width: 100%;
-    height: 15rem;
-    background-color: #2b2b2b;
+    height: 10rem;
+    background-color: #1a1a1a;
     border-radius: 20px;
     margin: 1rem;
     color: whitesmoke;
     padding: 1rem;
     font-size: 18px;
     resize: none;
-    border: 3px #00a4a2 solid;
+    border: 0px #00a4a2 solid;
     outline: none;
     opacity: 0.8;
   }
@@ -268,7 +268,8 @@
   .comment{
     display: flex;
     flex-direction: column;
-    background-color: #2b2b2b;
+    background-color: #1a1a1a;
+    opacity: 0.8;
     border-radius: 15px;
     margin-left: 0.75rem;
     margin-top: 0.5rem;
@@ -280,7 +281,7 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-right: 8px solid #2b2b2b;
+    border-right: 8px solid #1a1a1a;
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
     left: -8px;
@@ -292,6 +293,7 @@
     margin-top: 1rem;
     padding-right: 3rem;
     position: relative;
+    line-height: 20px;
   }
     .comment_info button{
       background-color: transparent;

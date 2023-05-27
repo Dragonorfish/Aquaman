@@ -25,16 +25,13 @@
   import { markdownToHtml, markdownToHtmlWithoutLink } from "../../utils/MarkdownUtils";
   import { doActionByAqBack } from "../../utils/ajaxService";
   import { getServer } from "../../environment/environment";
-  import { useRoute } from "vue-router";
-  import { ref, reactive, nextTick, onMounted } from "vue";
-  import CommentArea from "../../components/CommentArea.vue";
-  import router from "../../router";
-  import UserInfoItem from "../../components/UserInfoItem.vue";
-
-  const route = useRoute();
+  import { ref, watch,reactive, nextTick, onMounted } from "vue";
+  const props=defineProps({
+    articleId:""
+  })
   let isLoading = ref(true);
-  let articleInfo = reactive({
-    id: route.params.id,
+  let articleInfo = ref({
+    id: props.articleId,
     userId: "",
     artTitle: "",
     artContent: ""
@@ -42,20 +39,20 @@
   let author = ref({});
   onMounted(() => {
     initArticle();
-
   });
 
 
   async function initArticle() {
+    isLoading.value=true;
     let queryAriticleData = {
-      id: articleInfo.id
+      id: articleInfo.value.id
     };
     const article = ref(await getArticle(queryAriticleData));
-    articleInfo.artContent = markdownToHtml(article.value.artContent.replace(/^(\s|")+|(\s|")+$/g, "")
+    articleInfo.value.artContent = markdownToHtml(article.value.artContent.replace(/^(\s|")+|(\s|")+$/g, "")
       .replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\"/g, "\""));
-    articleInfo.userId = article.value.userId;
-    articleInfo.artTitle = article.value.artTitle;
-    getAuthor({ userId: articleInfo.userId });
+    articleInfo.value.userId = article.value.userId;
+    articleInfo.value.artTitle = article.value.artTitle;
+    getAuthor({ userId: articleInfo.value.userId });
   }
 
 
@@ -80,7 +77,8 @@
       queryData
     ).subscribe((response) => {
       author.value = response.data;
-      isLoading.value = !isLoading.value;
+      isLoading.value = false;
+      console.log(articleInfo);
       nextTick(() => {
         document.getElementById("article_title").scrollIntoView({
           behavior: "smooth"
@@ -88,5 +86,15 @@
       });
     });
   }
+
+  watch(props,()=>{
+    articleInfo.value ={
+      id: props.articleId,
+      userId: "",
+      artTitle: "",
+      artContent: ""
+    };
+    initArticle();
+  })
 </script>
 

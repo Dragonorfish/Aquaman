@@ -37,7 +37,8 @@
   quitButton.style.height = "50px";
   quitButton.style.opacity = 0.8;
   quitButton.style.borderRadius = "50%";
-  quitButton.style.marginLeft = "90%";
+  quitButton.style.position = "absolute";
+  quitButton.style.right="10%";
   quitButton.style.lineHeight = "50px";
   quitButton.style.textAlign = "center";
   quitButton.style.fontSize = "20px";

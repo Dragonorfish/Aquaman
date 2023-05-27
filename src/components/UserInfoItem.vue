@@ -45,7 +45,7 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    border: 7px #0B4252 solid;
+    border: 7px #2b2b2b solid;
     margin: 20px;
     z-index: 10;
   }
@@ -74,7 +74,7 @@
     width: 98%;
     height: 80%;
     position: absolute;
-    background-color: #0B4252;
+    background-color: #2b2b2b;
     border-radius: 20px;
     opacity: 1;
     left: 1%;
