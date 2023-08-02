@@ -1,5 +1,6 @@
 import * as _ from "underscore";
-
+import router from "../router";
+import { useConfirmBoxStore } from "../stores/modules/userStore";
 
 export function Base_HasValue(pValue) {
   if (_.isBoolean(pValue)) {
@@ -70,4 +71,19 @@ export function debounce(fn, delay = 500) {
       clearTimeout(timer)
     }, delay)
   }
+}
+
+export function resetUser(bool) {
+  // timer 是在闭包中的
+  if (bool){
+    localStorage.removeItem('token');
+    localStorage.removeItem("userInfo");
+    useConfirmBoxStore().$reset();
+    router.push("/login")
+  }
+  else {
+    useConfirmBoxStore().$reset();
+    return;
+  }
+
 }

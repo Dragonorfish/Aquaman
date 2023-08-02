@@ -19,4 +19,17 @@ export const useUserStore = defineStore("userInfo", {
   getters: {},
   actions: {}
 });
-
+export const useConfirmBoxStore = defineStore("boxState", {
+  // 共享状态，数据
+  state: () => {
+    return {
+      message:"你确认吗?",
+      isShow:false,
+      callBack:function(bool) {
+        console.log(bool)
+      }
+    };
+  },
+  getters: {},
+  actions: {}
+});

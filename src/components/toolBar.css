@@ -226,17 +226,17 @@
 .info_text{
     color: whitesmoke;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 20px;
+    opacity: 0.8;
 }
 #user_tab{
-    transform: translateX(-35%);
+    transform: translateX(-40%);
     top: 80%;
     border-radius: 25px;
 }
 
 #self_info_box {
-    width: 250px;
-    height: 300px;
+    width: 300px;
 }
 #button7 {
     position: relative;

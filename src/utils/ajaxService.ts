@@ -42,7 +42,11 @@ export function ajaxPostJson(_url, _body) {
     if (localStorage.getItem("token")) {
       options = {
         method: "POST",
-        headers: { "content-type": "application/json", "token": localStorage.getItem("token") },
+        headers: {
+          "content-type": "application/json",
+          "token": localStorage.getItem("token"),
+          "userId":JSON.parse(localStorage.getItem("userInfo")).userId
+        },
         url: _url,
         data: _body
       };

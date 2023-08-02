@@ -1,6 +1,6 @@
 <template>
+    <Loading v-if="isLoading"></Loading>
     <div id="home_body" class="page_body">
-        <Loading v-if="isLoading"></Loading>
         <div v-if="!isLoading" class="blog_list_body">
             <h1 id="blog_list_title">文章列表</h1>
             <div class="blog_list">

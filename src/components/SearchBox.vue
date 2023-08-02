@@ -245,16 +245,24 @@
       const reg=new RegExp(searchWord.value,"gi")
       searchResult.value=response.data.map((resultItem)=>{
         let index=resultItem.artContent.search(reg)
-        resultItem.artTitle=resultItem.artTitle.replace(reg,"<marker class='title_marker'>"+searchWord.value+"</marker>")
+        resultItem.artTitle=resultItem.artTitle.
+        replace(reg,"<marker class='title_marker'>"+searchWord.value+"</marker>")
         console.log(index,resultItem.artContent.length)
         if (index<20&&resultItem.artContent.length-searchWord.value.length-index<30){
-          resultItem.artContent=resultItem.artContent.replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+          resultItem.artContent=resultItem.artContent.
+          replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
         }else if(index<20){
-          resultItem.artContent=resultItem.artContent.slice(0,searchWord.value.length+index+30+20-index).replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+          resultItem.artContent=resultItem.artContent.
+          slice(0,searchWord.value.length+index+30+20-index).
+          replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
         }else if(resultItem.artContent.length-index-searchWord.value.length<30){
-          resultItem.artContent=resultItem.artContent.slice(index-20-(30-resultItem.artContent.length+index+searchWord.value.length),resultItem.artContent.length).replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+          resultItem.artContent=resultItem.artContent.
+          slice(index-20-(30-resultItem.artContent.length+index+searchWord.value.length),resultItem.artContent.length).
+          replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
         }else {
-          resultItem.artContent=resultItem.artContent.slice(index-20,index+30).replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
+          resultItem.artContent=resultItem.artContent.
+          slice(index-20,index+30).
+          replace(reg,"<marker class='content_marker'>"+searchWord.value+"</marker>")
         }
 
         return resultItem
@@ -268,5 +276,6 @@
     router.push("/article/"+id);
     searchWord.value="";
   }
+
   watch(searchWord,doSearch)
 </script>

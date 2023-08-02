@@ -9,8 +9,9 @@
                 <p style="color: #a8abb2;display: flex;justify-content: center;margin: 1rem">请上传文章封面</p>
             </div>
             <input class="title_input" v-model="articleTitle" placeholder="请输入文章标题">
+            <input class="title_input" v-model="articleTag" placeholder="请添加文章标签">
             <div class="act_btns">
-                <button id="save_article">保存草稿</button>
+                <button id="tag_add">添加标签</button>
                 <button id="pub_article" @click="pubArticle">发布文章</button>
             </div>
         </div>
@@ -36,6 +37,9 @@ let articleTitle=ref("")
 let $text=''
 let titleImgUrl=''
 let buttonAccess=true
+let articleTag=ref("")
+
+
 function getText(text) {
   $text=text;
 }
@@ -88,10 +92,12 @@ function pubArticle() {
     ).subscribe((response) => {
         if (["ERR_NETWORK", "ERR_BAD_RESPONSE"].indexOf(_sh.get(response,"code", null))!==-1){
             ElMessage.error("网络或服务器波动，文章发布失败");
-        }else {
-            articleTitle.value=""
-            $text=''
-            titleImgUrl=''
+        }else if (["500"].indexOf(_sh.get(response.data,"code", null))!==-1){
+            ElMessage.error(response.data.msg);
+        } else {
+            articleTitle.value="";
+            $text='';
+            titleImgUrl='';
             router.push("/pubSuccess");
         }
     });

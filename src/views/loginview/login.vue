@@ -38,14 +38,9 @@
   import { ajaxPostJsonp, doActionByAqBack } from "../../utils/ajaxService";
   import router from "../../router";
   import { getServer} from "../../environment/environment";
-  import { useUserStore } from "../../stores/modules/userStore";
 
   export default {
     name: "login",
-    setup(){
-        const store=useUserStore();
-        return store
-    },
     data(){
       let userMail;
       let password;
@@ -82,10 +77,6 @@
             localStorage.setItem("userInfo",JSON.stringify(
         {
                     userId:response.data.id,
-                    userName:response.data.userName,
-                    personSign:response.data.personSign,
-                    phoneNumber:response.data.phoneNumber,
-                    userMail:response.data.userMail,
                     userAVATAR:response.data.userAVATAR
                }
             ));

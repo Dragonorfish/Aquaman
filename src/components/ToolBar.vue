@@ -27,21 +27,27 @@
                 <div class="color_box" id="self_info_box">
                     <div class="self_card">
                         <span class="user_name">{{userInfo.userName}}</span>
+                        <span class="self_sign">{{userInfo.personSign}}</span>
                         <div class="user_info">
                             <div class="user_info_item">
                                 <span class="info_text_title">文章</span>
-                                <span class="info_text">25</span>
+                                <span class="info_text">{{userInfo.articleCount}}</span>
                             </div>
                             <div class="user_info_item">
                                 <span class="info_text_title">说说</span>
-                                <span class="info_text">11</span>
+                                <span class="info_text">{{userInfo.talkCount}}</span>
                             </div>
                             <div class="user_info_item">
                                 <span class="info_text_title">评论</span>
-                                <span class="info_text">64</span>
+                                <span class="info_text">{{userInfo.commentCount}}</span>
                             </div>
                         </div>
                         <SplitLine></SplitLine>
+                        <div class="user_buttons">
+                            <div class="user_button" @click="ToUserCenter">个人主页</div>
+                            <div class="user_button">设置</div>
+                            <div class="user_button" @click="logOut">登出</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,7 +75,7 @@
     .user_name {
         font-weight: 900;
         overflow: hidden;
-        width: 150px;
+        width: 200px;
         margin-top: 2rem;
         font-size: 20px;
         text-overflow: ellipsis;
@@ -78,6 +84,68 @@
         -webkit-line-clamp: 1;
         overflow-wrap: break-word;
 
+    }
+
+    .self_sign{
+        color: whitesmoke;
+        opacity: 0.8;
+        font-size: 18px;
+        margin-top: 1rem;
+    }
+
+    .user_buttons{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+        color: whitesmoke;
+    }
+    .user_button{
+        height: 50px;
+        width: 80%;
+        text-align: center;
+        line-height: 50px;
+        font-size: 18px;
+        font-weight: 600;
+        opacity: 0.8;
+        position: relative;
+        transition: all 0.3s;
+    }
+    .user_button::after{
+        content: "";
+        width: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+        height: 2px;
+        position: absolute;
+        background-image: linear-gradient(to left,transparent,gray,transparent);
+        transition: all 0.3s;
+    }
+    .user_button::before{
+        content: "";
+        width: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        /*transform: translateY(80px);*/
+        box-sizing: border-box;
+        top: 100%;
+        height: 2px;
+        position: absolute;
+        background-image: linear-gradient(to left,transparent,gray,transparent);
+        transition: all 0.3s;
+    }
+
+    .user_button:hover{
+        cursor: url("../assets/pointer1.cur"),auto;
+    }
+    .user_button:hover::after{
+        width: 100%;
+    }
+    .user_button:hover::before{
+        width: 100%;
     }
 </style>
 
@@ -88,6 +156,9 @@
   import { doActionByAqBack } from "../utils/ajaxService";
   import { getServer } from "../environment/environment";
   import {debounce} from "../utils/utilsService.ts"
+  import {resetUser} from "../utils/utilsService";
+  import {useConfirmBoxStore} from "../stores/modules/userStore";
+  const confirmStore=useConfirmBoxStore();
 
   const userInfo = ref({
     userAVATAR: "src/assets/static/weblogo.png",
@@ -95,7 +166,6 @@
   });
   const userBoxIsShow = ref(false);
   const pubBoxIsShow = ref(false);
-
   initUser({ userId: JSON.parse(localStorage.getItem("userInfo")).userId });
 
 
@@ -129,6 +199,12 @@
     });
   }
 
+  function logOut() {
+    confirmStore.callBack=resetUser;
+    confirmStore.message="确认登出?";
+    confirmStore.isShow=true;
+  }
+
   function ToHome() {
     router.push("/home");
   }
@@ -151,5 +227,8 @@
 
   function ToTalk() {
     router.push("/talk");
+  }
+  function ToUserCenter() {
+    router.push("/usercenter");
   }
 </script>

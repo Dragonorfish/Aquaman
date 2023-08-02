@@ -1,6 +1,6 @@
 <template>
     <div id="footer">
-        <dic class="line"></dic>
+        <div class="line"></div>
         <p style="font-size: 14px;">Copyright © 2022 - 2023 海王汇智</p>
         <div>
             <a target="_blank" class="link" style="color: gainsboro" href="https://beian.miit.gov.cn/">黑ICP备2022009434号-1</a>

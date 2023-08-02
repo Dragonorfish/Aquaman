@@ -15,13 +15,11 @@
         <p>{{item.contactInfo}}</p>
       </div>
     </div>
-    <CommentArea :familyId="'about'" class="comment_"></CommentArea>
+    <CommentArea :familyId="'about'" :type="'about'" class="comment_"></CommentArea>
   </div>
 </template>
 
 <script setup>
-  import CommentArea from "../../components/CommentArea.vue"
-
 
   const aboutInfo=[
     {

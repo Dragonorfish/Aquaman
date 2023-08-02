@@ -3,6 +3,7 @@
         <div class="background"/>
         <div class="bgimg_cover"></div>
         <div class="background2">
+            <ConfirmAlert v-if="confirmStore.isShow" :confirmMessage="confirmStore.message" @callBack="confirmStore.callBack"></ConfirmAlert>
             <ToolBar></ToolBar>
             <div class="body">
                 <router-view></router-view>
@@ -13,10 +14,8 @@
 </template>
 
 <script setup>
-    import ToolBar from "../../components/ToolBar.vue";
-    import Footer from "../../components/Footer.vue";
-    import router from "../../router";
-    import Loading from "../../components/Loading.vue"
+import {useConfirmBoxStore} from "../../stores/modules/userStore";
+const confirmStore=useConfirmBoxStore();
 
 </script>
 

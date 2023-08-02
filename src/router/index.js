@@ -49,6 +49,12 @@ const router = createRouter({
           name: "talkdetail",
           component: () => import("../views/talkview/TalkDetailView.vue"),
         },
+        {
+          path: "/usercenter",
+          name: "usercenter",
+          component: () => import("../views/userview/UserView.vue"),
+        },
+
       ]
     },
     {

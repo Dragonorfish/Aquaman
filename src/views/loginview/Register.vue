@@ -165,7 +165,12 @@
             console.log(JSON.stringify(userInfo));
             localStorage.removeItem("userInfo");
             localStorage.removeItem("token");
-            localStorage.setItem("userInfo",stringify(response.data));
+            localStorage.setItem("userInfo",JSON.stringify(
+              {
+                userId:response.data.id,
+                userAVATAR:response.data.userAVATAR
+              }
+            ));
             localStorage.setItem("token",response.data.token);
             router.push("/");
           }

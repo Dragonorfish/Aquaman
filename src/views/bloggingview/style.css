@@ -39,7 +39,7 @@
     justify-content: center;
 }
 
-#save_article{
+#tag_add{
     background-color: #e6a23c;
     margin: 0.6rem;
 }
@@ -48,7 +48,7 @@
     opacity: 1;
     margin: 0.6rem;
 }
-#save_article:hover{
+#tag_add:hover{
     opacity: 1;
 }
 #pub_article:hover{
