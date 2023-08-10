@@ -14,6 +14,14 @@
             {{articleInfo.artTitle}}
           </p>
         </div>
+        <div class="article_tag">
+          <div style="color: #00a4a2;font-weight: 600">
+            {{articleInfo.sign}}
+          </div>
+          <div style="font-style: italic;">
+            &nbsp;#{{articleInfo.sign}}
+          </div>
+        </div>
         <div class="artIntroduction">{{articleInfo.artContent.replace(/^(\s|")+|(\s|")+$/g, '').replace(/\\n/g, '\n').slice(0,200)}}</div>
         <div class="pub_info">
           <img :src="articleInfo.authorAvatar" class="author_avatar">
@@ -96,9 +104,8 @@
     font-size:1.5rem;
     font-weight: 900;
     width: 90%;
-    height: 15%;
     margin-left: 1rem;
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     cursor: url("../assets/pointer1.cur"),auto;
     position: relative;
     overflow: hidden;
@@ -113,12 +120,21 @@
     animation: discoloration 0.2s ease-out;
 
   }
+  .article_tag{
+    color: #a8abb2;
+    margin-left: 1rem;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+
+  }
   @keyframes discoloration {
     0%{color: whitesmoke;}
     100%{color: darkgray;}
   }
   .artIntroduction{
     margin: 1rem;
+    margin-top: 10px;
     color: whitesmoke;
     opacity: 0.8;
     font-size: 1rem;

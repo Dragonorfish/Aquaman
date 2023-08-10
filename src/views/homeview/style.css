@@ -4,7 +4,7 @@
     position: relative;
 }
 .body{
-    max-width: 1424px;
+    max-width: 1524px;
 
     margin: auto;
     margin-bottom: 5rem;
@@ -13,6 +13,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .background{

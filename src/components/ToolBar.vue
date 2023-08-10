@@ -54,6 +54,7 @@
             <div class="user_avatar" :style="{backgroundImage:'url('+userInfo.userAVATAR+')'}" id="button6"/>
         </div>
     </div>
+    <ConfirmAlert v-if="alertIsShow" confirmMessage="确认登出?" @callBack="resetFn"></ConfirmAlert>
 </template>
 
 
@@ -159,7 +160,7 @@
   import {resetUser} from "../utils/utilsService";
   import {useConfirmBoxStore} from "../stores/modules/userStore";
   const confirmStore=useConfirmBoxStore();
-
+  let alertIsShow=ref(false);
   const userInfo = ref({
     userAVATAR: "src/assets/static/weblogo.png",
     userName: "admin"
@@ -198,11 +199,16 @@
       console.log(userInfo.value);
     });
   }
+  function resetFn(bool) {
+    if (bool){
+      resetUser();
+    }else {
+      alertIsShow.value=false;
+    }
+  }
 
   function logOut() {
-    confirmStore.callBack=resetUser;
-    confirmStore.message="确认登出?";
-    confirmStore.isShow=true;
+    alertIsShow.value=true;
   }
 
   function ToHome() {

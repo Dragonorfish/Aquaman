@@ -19,6 +19,7 @@
         height: 100%;
         position: absolute;
         z-index: 9999;
+        top: 0;
     }
     .cover{
         width: 100%;

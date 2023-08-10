@@ -73,17 +73,8 @@ export function debounce(fn, delay = 500) {
   }
 }
 
-export function resetUser(bool) {
-  // timer 是在闭包中的
-  if (bool){
+export function resetUser() {
     localStorage.removeItem('token');
     localStorage.removeItem("userInfo");
-    useConfirmBoxStore().$reset();
     router.push("/login")
-  }
-  else {
-    useConfirmBoxStore().$reset();
-    return;
-  }
-
 }

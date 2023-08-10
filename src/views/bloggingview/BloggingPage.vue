@@ -17,6 +17,11 @@
         </div>
         <div id="warn"></div>
     </div>
+    <ConfirmAlert>
+        <div class="tag_add_box">
+
+        </div>
+    </ConfirmAlert>
 </template>
 
 <script setup>

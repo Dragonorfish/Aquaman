@@ -7,6 +7,9 @@
     <div class="person_sign">
         <span>{{author.personSign}}</span>
     </div>
+    <div class="author_center_link">
+      <img style="width: 100%;height: 100%" src="/src/assets/svgs/authorCenter.svg">
+    </div>
     <div class="info_box">
       <span class="info_box_item">
         <span class="info_box_item_title">文章数量</span>
@@ -31,11 +34,12 @@
 
 <style scoped>
   #userInfo_box{
-    min-width: 300px;
+    min-width: 16rem;
+    height: 100%;
   }
   .avatar_box{
     width: 100%;
-    height: 50%;
+    height: 35%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +49,7 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    border: 7px #2b2b2b solid;
+    border: 7px #3a3a3a solid;
     margin: 20px;
     z-index: 10;
   }
@@ -72,21 +76,30 @@
   }
   .cover{
     width: 98%;
-    height: 80%;
+    height: 90%;
     position: absolute;
     background-color: #2b2b2b;
     border-radius: 20px;
-    opacity: 1;
+    opacity:0.92;
     left: 1%;
     bottom: 0.6%;
   }
   .person_sign{
     height: auto;
   }
+  .author_center_link{
+    height: 3rem;
+    width: 3rem;
+    z-index: 10;
+    margin: auto;
+    clip-path: polygon(50% 3%,91% 25%,91% 75%,50% 97%,9% 75%,9% 25%);
+    background-color: aquamarine;
+    opacity: 0.7;
+  }
   .info_box{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     color: powderblue;
     font-weight: 600;
     position: relative;

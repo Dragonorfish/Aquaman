@@ -62,7 +62,6 @@
   color: whitesmoke;
 }
 .article_box{
-  width: 75%;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -81,9 +80,11 @@
   backdrop-filter: blur(10px);
 }
 .article_info{
-  width: 300px;
+  min-width: 24rem;
+  height: 475px;
   margin-top: 7rem;
-  padding-left: 2rem;
+  padding-left: 3rem;
+  box-sizing: border-box;
 }
 @media (max-width: 1080px){
   .article_info {

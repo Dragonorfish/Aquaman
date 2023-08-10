@@ -62,3 +62,7 @@
 .img_uploader:hover{
     border: 2px solid darkseagreen;
 }
+.tag_add_box{
+    width: 400px;
+    height: 300px;
+}
