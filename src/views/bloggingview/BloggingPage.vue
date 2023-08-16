@@ -9,17 +9,19 @@
                 <p style="color: #a8abb2;display: flex;justify-content: center;margin: 1rem">请上传文章封面</p>
             </div>
             <input class="title_input" v-model="articleTitle" placeholder="请输入文章标题">
-            <input class="title_input" v-model="articleTag" placeholder="请添加文章标签">
+            <div style="width: 90%">
+                <TagBox :itemList="tagList" @tagClick="tagClick"></TagBox>
+            </div>
             <div class="act_btns">
-                <button id="tag_add">添加标签</button>
+                <button id="tag_add" @click="tagAddBtnClick">添加标签</button>
                 <button id="pub_article" @click="pubArticle">发布文章</button>
             </div>
         </div>
         <div id="warn"></div>
     </div>
-    <ConfirmAlert>
+    <ConfirmAlert @callBack="tagAddCallBack" v-if="tagAddBoxIsShow">
         <div class="tag_add_box">
-
+            <input v-model="tagName" class="title_input" placeholder="标签名">
         </div>
     </ConfirmAlert>
 </template>
@@ -43,7 +45,11 @@ let $text=''
 let titleImgUrl=''
 let buttonAccess=true
 let articleTag=ref("")
+let tagAddBoxIsShow=ref(false)
+let tagName=ref("")
+let tagList=ref([]);
 
+initTag()
 
 function getText(text) {
   $text=text;
@@ -58,9 +64,9 @@ function pubArticle() {
         articleTitle.value=articleTitle.value.replace(/^\s*$/, "")
         ElMessage.error("文章标题不能为空");
         return;
-    }else if (articleTitle.value.replace(/^\s*$/, "").length<5){
+    }else if (articleTitle.value.replace(/^\s*$/, "").length<1){
         articleTitle.value=articleTitle.value.replace(/^\s*$/, "")
-        ElMessage.error("文章标题不可少于5个字");
+        ElMessage.error("文章标题不可少于1个字");
         return;
     }else if(articleTitle.value.replace(/^\s*$/, "").length>100){
         articleTitle.value=articleTitle.value.replace(/^\s*$/, "")
@@ -72,6 +78,9 @@ function pubArticle() {
     }else if($text.trim().length===0){
         ElMessage.error("文章内容不能为空");
         return;
+    }else if(articleTag.value.trim().length===0){
+      ElMessage.error("请选择文章标签");
+      return;
     }
     buttonAccess=false;
     let i=0;
@@ -84,9 +93,10 @@ function pubArticle() {
         }
     },1000)
     const queryData={
-        userId:"9e8a3cca02aa419e81a3ee2fe7f146a9",
+        userId:JSON.parse(localStorage.getItem("userInfo")).userId,
         title:articleTitle.value,
-        titleImg:titleImgUrl
+        titleImg:titleImgUrl,
+        tag:articleTag.value
     }
     doActionByAqBack(
         getServer().aquamanBackDev,
@@ -108,6 +118,60 @@ function pubArticle() {
     });
 }
 
+function tagAddBtnClick() {
+    tagAddBoxIsShow.value=true;
+}
+
+function initTag() {
+  tagList.value=[];
+  new Promise((resolve,reject)=> {
+    doActionByAqBack(
+      getServer().aquamanBackDev,
+      "AqArticleController",
+      "getAllTags"
+    ).subscribe((response) => {
+      response.data.forEach((item) => {
+        tagList.value.push(item.tagName)
+      })
+      resolve();
+    });
+  })
+}
+
+function tagClick(tag) {
+    articleTag.value=tag;
+}
+
+function tagAddCallBack(bool) {
+    if (!bool){
+      tagAddBoxIsShow.value=false;
+    }else if(tagName.value.trim().length<=0){
+      ElMessage.error("不能为空");
+    } else {
+      new Promise((resolve,reject)=>{
+        doActionByAqBack(
+          getServer().aquamanBackDev,
+          "AqArticleController",
+          "addTag",
+          {
+              tag:tagName.value.trim()
+            }
+        ).subscribe((response) => {
+          console.log(response);
+          if (response.data.code==="200"){
+            ElMessage.success(response.data.data);
+            tagAddBoxIsShow.value=false
+          }else {
+            ElMessage.error(response.data.data);
+          }
+          resolve();
+        }).then(()=>{
+          tagName.value="";
+        });
+      });
+      initTag();
+    }
+}
 </script>
 
 <style scoped>

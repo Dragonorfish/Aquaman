@@ -2,7 +2,13 @@
     <div class="page_body">
         <div class="article_view_body" v-if="!isLoading">
             <div class="article_box">
+                <div class="article_tag">#{{articleInfo.sign}}</div>
                 <div class="title" id="article_title">{{articleInfo.artTitle}}</div>
+                <div class="author_info">
+                    <div class="author_avatar" :style="{backgroundImage:`url(${author.userAVATAR})`}"></div>
+                    <div class="author_name">{{author.userName}}</div>
+                    <div class="pub_time">发布于&nbsp;{{articleInfo.addTime}}</div>
+                </div>
                 <div class="article_card" ref="articleCard" v-html="articleInfo.artContent">
                 </div>
                 <CommentArea :familyId="articleInfo.id" :type="$type" style="width: 100%;margin-top: 4rem"></CommentArea>
@@ -47,11 +53,9 @@
     let queryAriticleData = {
       id: articleInfo.value.id
     };
-    const article = ref(await getArticle(queryAriticleData));
-    articleInfo.value.artContent = markdownToHtml(article.value.artContent.replace(/^(\s|")+|(\s|")+$/g, "")
+    articleInfo.value = await getArticle(queryAriticleData);
+    articleInfo.value.artContent = markdownToHtml(articleInfo.value.artContent.replace(/^(\s|")+|(\s|")+$/g, "")
       .replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\"/g, "\""));
-    articleInfo.value.userId = article.value.userId;
-    articleInfo.value.artTitle = article.value.artTitle;
     getAuthor({ userId: articleInfo.value.userId });
   }
 
@@ -63,6 +67,7 @@
         "getArticleById",
         queryData
       ).subscribe((response) => {
+        console.log(response);
         resolve(response.data);
       });
     });
@@ -76,8 +81,8 @@
       queryData
     ).subscribe((response) => {
       author.value = response.data;
+      console.log(response);
       isLoading.value = false;
-      console.log(articleInfo);
       nextTick(() => {
         document.getElementById("article_title").scrollIntoView({
           behavior: "smooth"

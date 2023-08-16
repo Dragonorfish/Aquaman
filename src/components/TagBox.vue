@@ -1,37 +1,124 @@
 <template>
-    <div class="tag_box">
+    <div class="tag_box" :style="{height:boxHeight}">
         <div class="tag_items">
-            <div class="tag_item" v-for="item in items" :id="item">{{item}}</div>
+            <div @click="itemClick"
+                 v-for="item in props.itemList"
+                 :id="item"
+                 :class="item===hoverItem?'tag_item_hover':'tag_item'">{{item}}</div>
         </div>
-        <div class="pull_btn"></div>
+        <div class="pull_btn">
+            <img @click="pullBtnReverse" style="width: 80px;height: 60px" src="/src/assets/svgs/pullicon.svg">
+        </div>
     </div>
 </template>
 
 <script setup>
-    const items=["qdq","adwda","dawd","awd","csfca","qdq",
-      "adwda","dawd","awd","csfca","cawef","adw","jgs","ayfigaio;id"]
+    import {nextTick,ref,watch} from "vue";
+    const props=defineProps({
+      itemList: {
+        type: Array,
+        default: []
+      }
+    })
+    const emits=defineEmits(["tagClick"]);
+
+    let boxHeight=ref("auto");
+    let realHeight="";
+    let hoverItem=ref("")
+
+    function pullBtnReverse(e) {
+      if (e.target.style.transform!=="rotateZ(180deg)"){
+        e.target.style.transform="rotateZ(180deg)";
+        boxHeight.value=realHeight+"px";
+      }else {
+        e.target.style.transform="rotateZ(0deg)";
+        boxHeight.value="60px";
+      }
+
+    }
+
+    function itemClick(e) {
+      hoverItem.value=e.target.id;
+      emits("tagClick",e.target.id);
+    }
+
+    watch([props],()=>{
+      boxHeight.value="auto";
+      nextTick(()=>{
+        realHeight=document.getElementsByClassName("tag_box")[0]
+          .clientHeight;
+        console.log(realHeight)
+        boxHeight.value="60px";
+      })
+    })
 </script>
 
 <style scoped>
     .tag_box{
         width: 100%;
-        height: 70px;
-        margin: auto;
+        height: 60px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: row;
+        background-image: linear-gradient(#0B4252,#2e2e2e);
+        box-sizing: border-box;
+        border-radius: 15px;
+        box-shadow:inset 0px 0px 7px 0px #00a4a2;
+        transition: height,0.3s;
+    }
+    .tag_items{
+        flex:1;
+        margin-left: 10px;
+        max-height: 300px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        background-color: #2e2e2e;
-        box-sizing: border-box;
-        overflow: hidden;
+        overflow: auto;
     }
     .tag_item{
-        margin: 10px;
+        margin: 15px;
+        margin-left: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
         min-width: 80px;
-        height: 50px;
-        line-height: 50px;
+        height: 30px;
+        line-height: 30px;
+        font-weight: 300;
         text-align: center;
-        font-size: 25px;
+        font-size: 16px;
         color: whitesmoke;
+        opacity: 0.8;
+        cursor: url("/src/assets/pointer1.cur"),default;
+        background-color: darkslategray;
+        border-radius: 10px;
+        transition: opacity,0.2s;
+    }
+    .tag_item_hover{
+        margin: 15px;
+        margin-left: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+        min-width: 80px;
+        height: 30px;
+        line-height: 30px;
+        font-weight: 600;
+        text-align: center;
+        font-size: 20px;
+        color: grey;
+        opacity: 0.8;
+        background-image: linear-gradient(to right bottom,aquamarine,orange);
+        border-radius: 10px;
+        transition: opacity,0.2s;
+    }
+
+    .tag_item:hover{
+        opacity: 0.5;
+    }
+    .pull_btn img{
         cursor: url("src/assets/pointer1.cur"),default;
+        transition: transform 0.3s;
     }
 </style>

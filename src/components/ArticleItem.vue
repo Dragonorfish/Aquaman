@@ -105,7 +105,7 @@
     font-weight: 900;
     width: 90%;
     margin-left: 1rem;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     cursor: url("../assets/pointer1.cur"),auto;
     position: relative;
     overflow: hidden;
@@ -160,7 +160,7 @@
     margin-top: 1.5rem;
     margin-bottom: 0.2rem;
     position: absolute;
-    bottom: 2rem;
+    bottom: 1rem;
   }
   p{
     margin-left: 5px;
@@ -187,7 +187,7 @@
     color: gray;
     font-size: 13px;
     position: absolute;
-    bottom: 1rem;
+    bottom: 10px;
   }
   @media (max-width: 500px) {
     .artIntroduction{
