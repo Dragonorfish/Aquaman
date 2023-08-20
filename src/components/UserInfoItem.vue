@@ -8,7 +8,7 @@
         <span>{{author.personSign}}</span>
     </div>
     <div class="author_center_link">
-      <img style="width: 100%;height: 100%" src="/src/assets/svgs/authorCenter.svg">
+      <img style="width: 50%;height: 50%" src="/src/assets/svgs/homeIcon.svg">
     </div>
     <div class="info_box">
       <span class="info_box_item">
@@ -93,8 +93,17 @@
     z-index: 10;
     margin: auto;
     clip-path: polygon(50% 3%,91% 25%,91% 75%,50% 97%,9% 75%,9% 25%);
-    background-color: aquamarine;
-    opacity: 0.7;
+    /*background-image: linear-gradient(to bottom left,orange,aquamarine);*/
+    opacity: 0.6;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s;
+    cursor: url("/src/assets/pointer1.cur"),auto;
+  }
+  .author_center_link:hover{
+    opacity: 0.3;
   }
   .info_box{
     display: flex;

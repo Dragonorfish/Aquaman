@@ -7,7 +7,7 @@
                  :class="item===hoverItem?'tag_item_hover':'tag_item'">{{item}}</div>
         </div>
         <div class="pull_btn">
-            <img @click="pullBtnReverse" style="width: 80px;height: 60px" src="/src/assets/svgs/pullicon.svg">
+            <img @click="pullBtnReverse" style="width: 80px;height: 50px" src="/src/assets/svgs/pullicon.svg">
         </div>
     </div>
 </template>
@@ -18,13 +18,17 @@
       itemList: {
         type: Array,
         default: []
-      }
+      },
+      initHover:{
+        type: Array,
+        default: []
+      },
     })
     const emits=defineEmits(["tagClick"]);
 
     let boxHeight=ref("auto");
     let realHeight="";
-    let hoverItem=ref("")
+    let hoverItem=ref(props.initHover)
 
     function pullBtnReverse(e) {
       if (e.target.style.transform!=="rotateZ(180deg)"){
@@ -32,7 +36,7 @@
         boxHeight.value=realHeight+"px";
       }else {
         e.target.style.transform="rotateZ(0deg)";
-        boxHeight.value="60px";
+        boxHeight.value="50px";
       }
 
     }
@@ -48,15 +52,24 @@
         realHeight=document.getElementsByClassName("tag_box")[0]
           .clientHeight;
         console.log(realHeight)
-        boxHeight.value="60px";
+        boxHeight.value="50px";
       })
     })
+    window.addEventListener('resize', ()=>{
+      boxHeight.value="auto";
+      nextTick(()=>{
+        realHeight=document.getElementsByClassName("tag_box")[0]
+          .clientHeight;
+        console.log(realHeight)
+        boxHeight.value="50px";
+      });
+    })
+
 </script>
 
 <style scoped>
     .tag_box{
         width: 100%;
-        height: 60px;
         margin-top: 1rem;
         margin-bottom: 1rem;
         display: flex;
@@ -74,10 +87,10 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        overflow: auto;
+        overflow: hidden;
     }
     .tag_item{
-        margin: 15px;
+        margin: 10px;
         margin-left: 5px;
         padding-left: 10px;
         padding-right: 10px;
@@ -96,7 +109,7 @@
         transition: opacity,0.2s;
     }
     .tag_item_hover{
-        margin: 15px;
+        margin: 10px;
         margin-left: 5px;
         padding-left: 10px;
         padding-right: 10px;
@@ -104,9 +117,8 @@
         min-width: 80px;
         height: 30px;
         line-height: 30px;
-        font-weight: 600;
         text-align: center;
-        font-size: 20px;
+        font-size: 16px;
         color: grey;
         opacity: 0.8;
         background-image: linear-gradient(to right bottom,aquamarine,orange);
@@ -117,6 +129,7 @@
     .tag_item:hover{
         opacity: 0.5;
     }
+
     .pull_btn img{
         cursor: url("src/assets/pointer1.cur"),default;
         transition: transform 0.3s;
