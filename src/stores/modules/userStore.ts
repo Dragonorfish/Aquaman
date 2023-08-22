@@ -5,7 +5,7 @@ const userData = {
   userMail: "admin",
   userId: "admin",
   phoneNumber: "admin",
-  userAvatar: "src/assets/static/weblogo.png",
+  userAvatar: "/src/assets/static/weblogo.png",
   articleCount: 0,
   talkCount: 0
 };

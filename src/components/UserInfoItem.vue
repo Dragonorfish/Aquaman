@@ -35,7 +35,7 @@
 <style scoped>
   #userInfo_box{
     min-width: 16rem;
-    height: 100%;
+    height: 500px;
   }
   .avatar_box{
     width: 100%;

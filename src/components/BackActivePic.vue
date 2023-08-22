@@ -66,9 +66,6 @@
         return {left:e.left,top:e.top}
       })
     })
-    window.addEventListener("click",(e)=>{
-      console.log(e);
-    })
 
     window.addEventListener("mousemove",(e)=>{
       if (!initing){

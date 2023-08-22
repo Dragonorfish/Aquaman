@@ -64,13 +64,13 @@ export function debounce(fn, delay = 500) {
   let timer = null;
 
   return function() {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      // @ts-ignore
-      fn.apply(this, arguments)
-      clearTimeout(timer)
-    }, delay)
-  }
+    clearTimeout(timer);
+      timer = setTimeout(() => {
+        // @ts-ignore
+        fn.apply(this, arguments)
+        clearTimeout(timer)
+      }, delay)
+    }
 }
 
 export function resetUser() {

@@ -162,7 +162,7 @@
   const confirmStore=useConfirmBoxStore();
   let alertIsShow=ref(false);
   const userInfo = ref({
-    userAVATAR: "src/assets/static/weblogo.png",
+    userAVATAR: "/src/assets/static/weblogo.png",
     userName: "admin"
   });
   const userBoxIsShow = ref(false);

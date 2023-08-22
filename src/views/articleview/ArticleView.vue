@@ -15,6 +15,10 @@
             </div>
             <div class="article_info">
                 <UserInfoItem :author="author"></UserInfoItem>
+                <ArticleContent @contentItemClick="contentAct"
+                                :articleHTML="articleInfo.artContent"
+                                :contentHovering="contentHovering"
+                ></ArticleContent>
             </div>
         </div>
         <Loading v-if="isLoading"></Loading>
@@ -32,11 +36,17 @@
   import { doActionByAqBack } from "../../utils/ajaxService";
   import { getServer } from "../../environment/environment";
   import { ref, watch,reactive, nextTick, onMounted } from "vue";
+  import {throttle} from "/src/utils/utilsService";
   const props=defineProps({
     articleId:""
   })
   const $type="article"
   let isLoading = ref(true);
+  const titles=[];
+  let element={};
+  let contentHovering=ref({
+      innerText:""
+  });
   let articleInfo = ref({
     id: props.articleId,
     userId: "",
@@ -44,6 +54,7 @@
     artContent: ""
   });
   let author = ref({});
+
   onMounted(() => {
     initArticle();
   });
@@ -67,7 +78,6 @@
         "getArticleById",
         queryData
       ).subscribe((response) => {
-        console.log(response);
         resolve(response.data);
       });
     });
@@ -87,8 +97,46 @@
         document.getElementById("article_title").scrollIntoView({
           behavior: "smooth"
         });
+        element=document.getElementsByClassName("article_card")[0]
+        Array.from(element.children).forEach((el,index)=>{
+          window.addEventListener('scroll',titleScrollEvt,true)
+          if (el.nodeName==="H2"||el.nodeName==="H3"){
+            titles.push(el);
+          }
+        })
+        console.log(titles);
+        contentHovering.value=titles[0];
       });
     });
+  }
+
+  const titleScrollEvt=throttle(()=>{
+    titles.forEach((title,index)=>{
+      if (index===titles.length-1){
+        if (title.getBoundingClientRect().y<=200){
+          contentHovering.value=title;
+          console.log(contentHovering.value.innerText);
+        }
+      }else {
+        if (title.getBoundingClientRect().y<=200&&titles[index+1].getBoundingClientRect().y>200){
+          contentHovering.value=title;
+          console.log(contentHovering.value.innerText);
+        }
+      }
+    })
+    // console.log(titles[0].getBoundingClientRect());
+
+  },200)
+
+
+  function contentAct(text){
+    titles.forEach((title)=>{
+      if (title.innerHTML===text){
+          title.scrollIntoView({
+              behavior: "smooth"
+          });
+      }
+    })
   }
 
   watch(props,()=>{
