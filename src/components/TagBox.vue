@@ -131,7 +131,7 @@
     }
 
     .pull_btn img{
-        cursor: url("src/assets/pointer1.cur"),default;
+        cursor: url("/src/assets/pointer1.cur"),default;
         transition: transform 0.3s;
     }
 </style>

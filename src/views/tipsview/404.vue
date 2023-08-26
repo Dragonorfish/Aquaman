@@ -62,7 +62,7 @@
   .back_to_home{
     font-size: 30px;
     text-align: center;
-    cursor: url("src/assets/pointer1.cur"),auto;
+    cursor: url("/src/assets/pointer1.cur"),auto;
   }
 
   @keyframes glitch {

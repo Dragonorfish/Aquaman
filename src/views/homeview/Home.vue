@@ -1,19 +1,20 @@
 <template>
     <div id="home_body" class="page_body">
+        <h1 id="blog_list_title">文章列表</h1>
         <div class="blog_main_box" >
             <div class="blog_list_body">
-                <h1 id="blog_list_title">文章列表</h1>
-                    <TagBox @tagClick="tagClick" initHover="全部" :itemList="tagList"></TagBox>
-                    <Loading v-if="isLoading"></Loading>
-                    <div v-if="!isLoading" class="blog_list">
-                         <div v-for="item in articleList" :key="item.id" class="blog_item">
-                            <ArticleItem :articleInfo="item"></ArticleItem>
-                        </div>
+                <TagBox @tagClick="tagClick" initHover="全部" :itemList="tagList"></TagBox>
+                <Loading v-if="isLoading"></Loading>
+                <div v-if="!isLoading" class="blog_list">
+                     <div v-for="item in articleList" :key="item.id" class="blog_item">
+                        <ArticleItem :articleInfo="item"></ArticleItem>
                     </div>
-                    <Pagination class="pagination" :total="pageNum" @pageChange="pageChange"></Pagination>
+                </div>
+                <Pagination class="pagination" :total="pageNum" @pageChange="pageChange"></Pagination>
 
             </div>
             <div class="side_box">
+                <HotBlogs></HotBlogs>
             </div>
         </div>
 

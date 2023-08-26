@@ -15,6 +15,7 @@
             </div>
             <div class="article_info">
                 <UserInfoItem :author="author"></UserInfoItem>
+                <LatestComment :authorId="author.id"></LatestComment>
                 <ArticleContent @contentItemClick="contentAct"
                                 :articleHTML="articleInfo.artContent"
                                 :contentHovering="contentHovering"

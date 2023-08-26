@@ -303,7 +303,7 @@
       queryData
     ).subscribe((response) => {
       console.log(response.data)
-      if (response.data.length===11){
+      if (response.data.length===10){
         loadAlldDisable=false;
       }
       commentList.value=response.data;

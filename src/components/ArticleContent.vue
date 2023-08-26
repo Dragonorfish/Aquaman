@@ -3,8 +3,9 @@
         <h3 class="content_title">目录</h3>
         <div v-for="item in parts" class="content_first">
             <div :class="item.name===props.contentHovering.innerText?'hover_item':'no_hover_item'" @click="contentItemClick">{{item.name}}</div>
-            <div class="content_second" v-for="child in item.children">
-                <div :class="child===props.contentHovering.innerText?'hover_item':'no_hover_item'" @click="contentItemClick">{{child}}</div>
+            <div class="content_second"
+                 v-for="child in item.children">
+                <div v-show="item.children.indexOf(contentHovering.innerText)+1" :class="child===props.contentHovering.innerText?'hover_item':'no_hover_item'" @click="contentItemClick">{{child}}</div>
             </div>
         </div>
     </div>
@@ -53,6 +54,13 @@
               name:"",
               children:[]
             }
+          }else if(part.children.length>0){
+            part.children.forEach((child)=>{
+              parts.value.push({
+                name:child,
+                children:[]
+              });
+            })
           }
         }
       })

@@ -95,6 +95,8 @@
   font-weight: 600;
   font-style: italic;
   text-shadow: black 0px 0px 5px;
+  display: flex;
+  align-items: center;
 }
 .author_info{
   display: flex;

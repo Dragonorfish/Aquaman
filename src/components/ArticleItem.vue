@@ -21,6 +21,16 @@
           <div style="font-style: italic;">
             &nbsp;#{{articleInfo.sign}}
           </div>
+          <div  style="
+          transform: rotateY(180deg);
+          height: 16px;
+          background-size: contain;
+          margin-left: 5px;
+          background-repeat: no-repeat;
+          width: 20px;
+          background-image: url('/src/assets/svgs/commentIcon.svg')">
+          </div>
+          <div style="margin-left:3px">{{articleInfo.commentCount}}</div>
         </div>
         <div class="artIntroduction">{{articleInfo.artContent.replace(/^(\s|")+|(\s|")+$/g, '').replace(/\\n/g, '\n').slice(0,200)}}</div>
         <div class="pub_info">

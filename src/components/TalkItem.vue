@@ -3,7 +3,18 @@
         <div class="talk_info">
             <img :src="this.props.talkInfo.userAvatar" class="avatar"/>
             <span id="user_name" class="info_text">{{talkInfo.userName}}</span>
-            <span id="pub_time" class="info_text">发布于 {{talkInfo.addTime}}</span>
+            <span id="pub_time" class="info_text">发布于 {{talkInfo.addTime}}
+              <div  style="
+                  transform: rotateY(180deg);
+                  height: 16px;
+                  background-size: contain;
+                  margin-left: 5px;
+                  background-repeat: no-repeat;
+                  width: 20px;
+                  background-image: url('/src/assets/svgs/commentIcon.svg')">
+              </div>
+              <div style="margin-left:3px">{{talkInfo.commentCount}}</div>
+            </span>
         </div>
         <div class="talk_content">
             <div class="talk_text" @click="toTalkDetail">
@@ -80,7 +91,8 @@
         font-size: 14px;
         color: grey;
         font-style: italic;
-
+        display: flex;
+        align-items: center;
     }
 
     .talk_content {
@@ -159,6 +171,7 @@
   const content = props.talkInfo.talkContent.replace(urlreg, (url) => {
     return '<a class="text_link" href="' + url + '">' + url + '</a>';
   });
+  console.log(props.talkInfo);
   onMounted(() => {
     document.getElementById(props.talkInfo.id).getElementsByClassName("talk_text_detail")[0].innerHTML = content;
     if (document.getElementById(props.talkInfo.id).getElementsByClassName("talk_text")[0].offsetHeight > 249) {
