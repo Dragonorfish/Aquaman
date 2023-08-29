@@ -22,7 +22,6 @@
                     <button class="route_button" id="button7-2" @click="ToPubTalk">说说</button>
                 </div>
             </span>
-            <button class="route_button" id="button8" @click="ToTest">测试</button>
         </div>
         <div class="self_box">
             <div class="button_tab" id="user_tab" v-if="userBoxIsShow">
@@ -238,6 +237,6 @@
     router.push("/talk");
   }
   function ToUserCenter() {
-    router.push("/usercenter"+JSON.parse(localStorage.getItem("userInfo")).userId);
+    router.push("/usercenter/"+JSON.parse(localStorage.getItem("userInfo")).userId);
   }
 </script>

@@ -23,6 +23,7 @@
     box-sizing: border-box;
 }
 .tab_page{
+    margin-top: 1rem;
     width: 100%;
     display: flex;
     flex-direction: column;

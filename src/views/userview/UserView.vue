@@ -62,7 +62,7 @@
     import { doActionByAqBack } from "../../utils/ajaxService";
     import { getServer } from "../../environment/environment";
     import {debounce} from "../../utils/utilsService.ts";
-    import {ref} from "vue"
+    import {ref,onMounted} from "vue"
     import { ElMessage } from "element-plus";
     const userInfo=ref("");
     const editing=ref(false);
@@ -78,26 +78,30 @@
     const hoverTab=ref("")
     let pageNum = ref(0);
 
+    const props=defineProps({
+      userId:String
+    })
     let queryData={
-      userId:JSON.parse(localStorage.getItem("userInfo")).userId,
+      userId:props.userId,
       tag:"全部",
       page: 0,
       size: 6
     }
 
-    new Promise((resolve, reject) =>{
-      doActionByAqBack(
-        getServer().aquamanBackDev,
-        "AqUserController",
-        "getAuthor",
-        queryData
-      ).subscribe((response) => {
-        console.log(response);
-        userInfo.value=response.data;
-        userName.value=response.data.userName
-        userSign.value=response.data.personSign
-      });
-    })
+
+      new Promise((resolve, reject) =>{
+        doActionByAqBack(
+          getServer().aquamanBackDev,
+          "AqUserController",
+          "getAuthor",
+          queryData
+        ).subscribe((response) => {
+          console.log(response);
+          userInfo.value=response.data;
+          userName.value=response.data.userName
+          userSign.value=response.data.personSign
+        });
+      })
 
     function tabClick(tab) {
       hoverTab.value=tab;

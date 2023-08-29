@@ -32,13 +32,13 @@
       selfName:"amllIHFx",
       selfIntroduction:"武汉理工大学 地理信息科学系 大三",
       speak:"这个人有点懒，什么都没有说 ",
-      contactInfo:"QQ:541610102"
+      contactInfo:"QQ:5416XXXXX"
     },
     {
       selfName:"樱",
       selfIntroduction:"武汉理工大学 地理信息科学系 大三",
       speak:"人は笑われって笑われって強くなった",
-      contactInfo:"QQ:2771634192"
+      contactInfo:"QQ:27716XXXXX"
     }
   ]
 

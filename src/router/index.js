@@ -50,9 +50,10 @@ const router = createRouter({
           component: () => import("../views/talkview/TalkDetailView.vue"),
         },
         {
-          path: "/usercenter",
+          path: "/usercenter/:userId",
           name: "usercenter",
           component: () => import("../views/userview/UserView.vue"),
+          props: (route) => ({userId: route.params.userId})
         },
         {
           path: "/tags",
