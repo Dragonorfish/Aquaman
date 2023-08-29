@@ -131,7 +131,7 @@ function initTag() {
       "getAllTags"
     ).subscribe((response) => {
       response.data.forEach((item) => {
-        tagList.value.push(item.tagName)
+        tagList.value.push([item.tagName])
       })
       resolve();
     });

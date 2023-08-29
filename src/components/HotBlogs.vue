@@ -1,7 +1,7 @@
 <template>
     <div class="hot_blogs">
         <h3 class="comment_title">热门文章</h3>
-        <div class="hot_blog_item" v-for="item in hotBlogList">
+        <div class="hot_blog_item" @click="toArtContent(item.id)" v-for="item in hotBlogList">
             <div class="blog_title">{{item.artTitle}}</div>
             <div class="read_count">
                 <div class="hot_author_info">
@@ -19,6 +19,7 @@
     import {ref} from "vue"
     import { doActionByAqBack } from "../utils/ajaxService";
     import { getServer } from "../environment/environment";
+    import router from "../router";
     const hotBlogList=ref([]);
     new Promise((resolve,reject)=>{
       doActionByAqBack(
@@ -30,6 +31,9 @@
         hotBlogList.value=response.data.content
       })
     })
+    function toArtContent(id) {
+      router.push("/article/"+id);
+    }
 </script>
 
 <style scoped>
@@ -44,7 +48,6 @@
         padding: 2rem;
         padding-top: 1rem;
         box-sizing: border-box;
-        margin-left: 2rem;
         color: whitesmoke;
     }
 

@@ -43,7 +43,7 @@
 }
 .background2{
 
-    background-image: linear-gradient(to bottom,transparent 250px,black 300px,#0B4252,black);
+    background-image: linear-gradient(to bottom,transparent 275px,black 300px,#0B4252,black);
     display: flex;
     flex-direction: column;
     align-items: center;

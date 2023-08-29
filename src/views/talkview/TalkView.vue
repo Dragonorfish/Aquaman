@@ -8,7 +8,9 @@
                 </TalkItem>
             </div>
             <div id="side_part" class="color_box">
-
+                <div style="font-weight:600;font-size: 30px; width: 100%;line-height: 400px;text-align: center">
+                    留言版施工中捏
+                </div>
             </div>
         </div>
 

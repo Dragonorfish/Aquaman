@@ -39,8 +39,102 @@
         <div class="layer" id="layer_1" style="top: 145px;left: 250px">
             <img width="1000" src="/src/assets/static/1.png">
         </div>
+        <div class="wave">
+            <div class="water" id="w_one"></div>
+            <div class="water" id="w_two"></div>
+            <div class="water" id="w_three"></div>
+            <div class="water" id="w_four"></div>
+            <div class="water" id="w_five"></div>
+        </div>
     </div>
 </template>
+
+<style scoped>
+    .back_active_pic{
+        width: 100%;
+        position: relative;
+        height: 100%;
+
+    }
+    .layer{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+    }
+    .layer img{
+        object-fit: contain;
+    }
+    .wave{
+        width: 100%;
+        height: 200px;
+        position: relative;
+        z-index: 50;
+        transform: scaleX(2);
+    }
+    .water{
+        width: 3000px;
+        height:3000px;
+        border-radius: 45%;
+        position: absolute;
+        top: 170%;
+        left: 50%;
+        transform:translateX(-50%);
+        background-color: black;
+        animation:move 12s infinite cubic-bezier(.55,.5,.45,.5);
+
+    }
+    #w_one{
+        top: 175%;
+        opacity: 0.8;
+    }
+    #w_two{
+        left: 75%;
+        opacity: 0.7;
+        animation:move 14s infinite cubic-bezier(.55,.5,.45,.5);
+    }
+    #w_three{
+        left: 25%;
+        opacity: 0.6;
+        animation:move 10s infinite cubic-bezier(.55,.5,.45,.5);
+    }
+    #w_four{
+        opacity: 0.5;
+        top: 175%;
+        animation:run_move 15s infinite cubic-bezier(.55,.5,.45,.5);
+    }
+    #w_five{
+        opacity: 0.7;
+        top: 175%;
+        animation:run_move 20s infinite cubic-bezier(.55,.5,.45,.5);
+    }
+
+    @keyframes move {
+        0% {
+            transform: translate(-50%, 0) rotateZ(0deg);
+        }
+        50% {
+            transform: translate(-50%, -2%) rotateZ(180deg);
+        }
+        100% {
+            transform: translate(-50%, 0%) rotateZ(360deg);
+        }
+    }
+    @keyframes run_move {
+        0% {
+            left: 0;
+            transform: translate(-50%, 0) rotateZ(0deg);
+        }
+        50% {
+            transform: translate(-50%, -2%) rotateZ(180deg);
+        }
+        100% {
+            left: 100%;
+            transform: translate(0%, 0%) rotateZ(360deg);
+        }
+    }
+</style>
 
 <script setup>
     import {ref,nextTick} from "vue"
@@ -156,21 +250,3 @@
     }
 </script>
 
-<style scoped>
-    .back_active_pic{
-        width: 100%;
-        position: relative;
-        height: 100%;
-        overflow: hidden;
-    }
-    .layer{
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-    }
-    .layer img{
-        object-fit: contain;
-    }
-</style>

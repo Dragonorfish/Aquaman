@@ -15,6 +15,22 @@
             </div>
             <div class="side_box">
                 <HotBlogs></HotBlogs>
+                <div style="opacity:0.8;
+                    border-radius: 15px;
+                    box-shadow: #00a4a2 0px 0px 10px 5px;
+                    background-color: #2b2b2b;
+                    padding: 2rem;
+                    box-sizing: border-box;
+                    margin-top: 2rem;
+                ">
+                    <h3 style="font-size: 24px;color: whitesmoke;">标签目录</h3>
+                    <TagShow :type="'home'" :tagList="tagList.slice(1,10)"></TagShow>
+                    <div
+                            v-if="tagList.length>=10"
+                            style="cursor:url('/src/assets/pointer1.cur'),auto;
+                            margin-top:10px;color: whitesmoke;font-weight: 600;">查看更多...</div>
+                </div>
+
             </div>
         </div>
 
@@ -38,14 +54,15 @@
   let currentBlogCount = ref(0);
   let isLoading = ref(true);
   let tagList=ref([]);
-  let queryData = {
+  let queryData={
+    tag:"全部",
     page: 0,
     size: 10
-  };
+  }
   let articleList = ref([]);
 
   onMounted(() => {
-    initList(queryData);
+    initList();
   });
 
   function pageChange(page) {
@@ -71,16 +88,17 @@
 
   function tagClick(tag) {
     changeLoadingState();
-    changeList(tag).then(()=>{
+    queryData.tag=tag;
+    changeList(queryData.tag).then(()=>{
       changeLoadingState();
     })
 
   }
 
-  function initList(queryData) {
+  function initList() {
     Promise.all([
       initTag(),
-      changeList("全部")
+      changeList(queryData.tag)
     ]).then(()=>{
       changeLoadingState();
     })
@@ -116,9 +134,9 @@
         "AqArticleController",
         "getAllTags"
       ).subscribe((response) => {
-        tagList.value.push("全部")
+        tagList.value.push(["全部",0])
         response.data.forEach((item)=>{
-          tagList.value.push(item.tagName)
+          tagList.value.push([item.tagName,item.articleNum])
         })
         resolve();
       });

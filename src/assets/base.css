@@ -12,7 +12,7 @@
 .color_box{
   background-image: linear-gradient(to right top,aquamarine,aquamarine,orange);
   height: auto;
-  border-radius: 25px;
+  border-radius: 10px;
   position: relative;
   display: flex;
   flex-direction: column;

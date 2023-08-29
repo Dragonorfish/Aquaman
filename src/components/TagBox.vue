@@ -3,8 +3,8 @@
         <div class="tag_items">
             <div @click="itemClick"
                  v-for="item in props.itemList"
-                 :id="item"
-                 :class="item===hoverItem?'tag_item_hover':'tag_item'">{{item}}</div>
+                 :id="item[0]"
+                 :class="item[0]===hoverItem?'tag_item_hover':'tag_item'">{{item[0]}}</div>
         </div>
         <div class="pull_btn">
             <img @click="pullBtnReverse" style="width: 80px;height: 50px" src="/src/assets/svgs/pullicon.svg">
@@ -16,12 +16,11 @@
     import {nextTick,ref,watch} from "vue";
     const props=defineProps({
       itemList: {
-        type: Array,
         default: []
       },
       initHover:{
-        type: Array,
-        default: []
+        type: String,
+        default: ""
       },
     })
     const emits=defineEmits(["tagClick"]);
@@ -70,7 +69,6 @@
 <style scoped>
     .tag_box{
         width: 100%;
-        margin-top: 1rem;
         margin-bottom: 1rem;
         display: flex;
         flex-direction: row;

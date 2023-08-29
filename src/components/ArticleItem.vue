@@ -145,8 +145,7 @@
   .artIntroduction{
     margin: 1rem;
     margin-top: 10px;
-    color: whitesmoke;
-    opacity: 0.8;
+    color: #c0c0c0;
     font-size: 1rem;
     line-height: 1.5rem;
     overflow: hidden;

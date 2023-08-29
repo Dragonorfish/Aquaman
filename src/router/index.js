@@ -54,6 +54,17 @@ const router = createRouter({
           name: "usercenter",
           component: () => import("../views/userview/UserView.vue"),
         },
+        {
+          path: "/tags",
+          name: "tags",
+          component: () => import("../views/tagview/TagView.vue"),
+        },
+        {
+          path: "/blogpage/:tag",
+          name: "blogpage",
+          component: () => import("../views/bloggingview/BlogPage.vue"),
+          props: (route) => ({tag: route.params.tag})
+        },
 
       ]
     },

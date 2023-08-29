@@ -1,3 +1,114 @@
-.user_view{
+#user_view{
+    display: flex;
+    flex-direction: row;
+}
+.left_box{
+    width: calc(300px + 4rem);
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.avatar_edit{
+    width: 200px;
+    height: 200px;
+}
+.right_box{
+    flex: 5;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.tab_page{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    animation: appear 1s;
+}
+@keyframes appear {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.blog_list {
+    position: relative;
+    display: grid;
+    grid-template-columns:repeat(2, 48%);
+    grid-row-gap: 2rem;
+    grid-column-gap: 4%;
+}
+.blog_item {
+    height: 16rem;
+}
 
+.user_info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.user_name{
+    width: 300px;
+    color: whitesmoke;
+    font-size: 32px;
+    text-align: start;
+    text-wrap: normal;
+    word-break: break-all;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+.user_sign{
+    width: 300px;
+    color: #c0c0c0;
+    font-size: 18px;
+    text-wrap: normal;
+    word-break: break-all;
+    text-align: start;
+    margin-top: 10px;
+}
+.info_edit_btn{
+    width: 300px;
+    background-color: #0d8b89;
+    font-size: 16px;
+    text-align: center;
+    line-height: 2rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    color: whitesmoke;
+}
+.info_edit_btn:hover{
+    box-shadow:inset whitesmoke 0px 0px 5px 1px;
+    cursor: url("/src/assets/pointer1.cur"),auto;
+}
+.data_item{
+    color: #ffffff;
+    margin-top: 1rem;
+    font-size: 18px;
+    font-weight: 600;
+}
+.edit_input{
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 10px;
+    outline: none;
+    color: aqua;
+    border: 2px solid lightseagreen;
+    margin-top: 1rem;
+    transition: box-shadow,0.2s;
+}
+.edit_input:focus{
+    border: 2px solid aquamarine;
+    box-shadow:0px 0px 20px 0px #00a4a2;
+}
+.edit_confirm_btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
 }

@@ -13,6 +13,8 @@
 
             <SearchBox></SearchBox>
 
+            <button class="route_button" id="button9" @click="ToTag">标签</button>
+
             <span class="route_button" id="button7">
                 发布
                 <div class="button_tab" id="child_tab" v-if="pubBoxIsShow">
@@ -74,6 +76,7 @@
     }
 
     .user_name {
+        text-align: center;
         font-weight: 900;
         overflow: hidden;
         width: 200px;
@@ -156,10 +159,7 @@
   import { nextTick, onMounted, ref } from "vue";
   import { doActionByAqBack } from "../utils/ajaxService";
   import { getServer } from "../environment/environment";
-  import {debounce} from "../utils/utilsService.ts"
   import {resetUser} from "../utils/utilsService";
-  import {useConfirmBoxStore} from "../stores/modules/userStore";
-  const confirmStore=useConfirmBoxStore();
   let alertIsShow=ref(false);
   const userInfo = ref({
     userAVATAR: "/src/assets/static/weblogo.png",
@@ -218,6 +218,9 @@
   function ToMdEditor() {
     router.push("/bloggingPage");
   }
+  function ToTag() {
+    router.push("/tags");
+  }
 
   function ToPubTalk() {
     router.push("/pubTalk");
@@ -235,6 +238,6 @@
     router.push("/talk");
   }
   function ToUserCenter() {
-    router.push("/usercenter");
+    router.push("/usercenter"+JSON.parse(localStorage.getItem("userInfo")).userId);
   }
 </script>
