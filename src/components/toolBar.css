@@ -185,6 +185,7 @@
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: lightseagreen;
+    background-image: url("/src/assets/svgs/defaultAvt.svg");
     cursor: url("/src/assets/pointer1.cur"),auto;
     transition: transform 0.3s;
 }
@@ -196,6 +197,7 @@
     background-repeat: no-repeat;
     background-color: lightseagreen;
     cursor: url("/src/assets/pointer1.cur"),auto;
+    background-image: url("/src/assets/svgs/defaultAvt.svg");
     border: 5px #2b2b2b solid;
     box-sizing: border-box;
     transition: transform 0.3s;

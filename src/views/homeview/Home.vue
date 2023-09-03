@@ -1,5 +1,6 @@
 <template>
     <div id="home_body" class="page_body">
+        <Carousel :articleList="articleList"></Carousel>
         <h1 id="blog_list_title">文章列表</h1>
         <div class="blog_main_box" >
             <div class="blog_list_body">
@@ -33,7 +34,6 @@
 
             </div>
         </div>
-
     </div>
 </template>
 

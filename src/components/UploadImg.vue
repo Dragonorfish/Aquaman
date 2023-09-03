@@ -26,6 +26,7 @@
   let ifUploadFalse=false;
   let imgUrl=ref("");
   const emit = defineEmits(["getImgUrl"]);
+
   function restartUpLoad() {
     if(ifUploadFalse){
       document.getElementById('img_cover').style.display="none";
@@ -76,9 +77,6 @@
             i+=1;
           }
         }, 100);
-      }).catch((error)=>{
-        document.getElementById('img_cover').innerHTML="图片上传失败,点击重新上传";
-        ifUploadFalse=true;
       })
     }
     else{

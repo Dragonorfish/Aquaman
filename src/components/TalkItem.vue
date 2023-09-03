@@ -1,17 +1,10 @@
 <template>
     <div class="talk_item">
         <div class="talk_info">
-            <img :src="this.props.talkInfo.userAvatar" class="avatar"/>
+            <img :src="talkInfo.userAvatar" class="avatar"/>
             <span id="user_name" class="info_text">{{talkInfo.userName}}</span>
             <span id="pub_time" class="info_text">发布于 {{talkInfo.addTime}}
-              <div  style="
-                  transform: rotateY(180deg);
-                  height: 16px;
-                  background-size: contain;
-                  margin-left: 5px;
-                  background-repeat: no-repeat;
-                  width: 20px;
-                  background-image: url('/src/assets/svgs/commentIcon.svg')">
+              <div class="comment_icon">
               </div>
               <div style="margin-left:3px">{{talkInfo.commentCount}}</div>
             </span>
@@ -24,11 +17,11 @@
                 <div v-if="needCover" class="talk_text_cover"></div>
             </div>
             <div class="talk_imgs">
-                <div :class="this.props.talkInfo.talkPicList.length===1?
-                                 'one_img':this.props.talkInfo.talkPicList.length===2?
+                <div :class="talkInfo.talkPicList.length===1?
+                                 'one_img':talkInfo.talkPicList.length===2?
                                  'two_img':'more_img'"
                 >
-                    <div class="img_box" v-for="img in this.props.talkInfo.talkPicList">
+                    <div class="img_box" v-for="img in talkInfo.talkPicList">
                         <AqImage :url="img"/>
                     </div>
                 </div>
@@ -70,6 +63,15 @@
         grid-template-columns: 2.5rem auto;
         grid-template-rows: 1.25rem 1.25rem;
         width: 100%;
+    }
+    .comment_icon{
+        transform: rotateY(180deg);
+        height: 16px;
+        background-size: contain;
+        margin-left: 5px;
+        background-repeat: no-repeat;
+        width: 20px;
+        background-image: url('/src/assets/svgs/commentIcon.svg')
     }
     @media  {
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="fly" style="background-image: url(/src/assets/static/hero-drone.webp)"></div>
+    <div class="fly"></div>
     <div class="bg">
         <div class="card" style="height: 370px">
             <el-form status-icon ref="ruleForm" class="form">

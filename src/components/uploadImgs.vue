@@ -85,8 +85,6 @@
                 }
         )
         console.log(imgList)
-      }).catch((error)=>{
-        ElMessage.error('文件错误，上传失败')
       })
     }
     else{

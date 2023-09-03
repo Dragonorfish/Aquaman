@@ -90,7 +90,7 @@
 
 <script setup>
   const props=defineProps({
-    confirmMessage:{type:[String],default:"你确认吗"}
+    confirmMessage:{type:[String],default:"你确认吗"},
   })
   const emits=defineEmits(["callBack"]);
   console.log(props.confirmMessage)

@@ -74,10 +74,6 @@
     animation: contract linear 0.1s;
     cursor: url("../assets/pointer1.cur"),auto;
   }
-  .item_box:hover{
-    transform: scale(1.01);
-    animation: expand linear 0.2s;
-  }
   @keyframes expand {
     0%{transform: scale(1);}
     100%{transform: scale(1.01);}
@@ -113,11 +109,11 @@
   .title{
     color: whitesmoke;
     text-decoration: none;
-    font-size:1.5rem;
+    font-size:2.5rem;
     font-weight: 900;
+    text-align: start;
     width: 90%;
-    margin-left: 1rem;
-    padding-top: 1rem;
+    padding-top: 2rem;
     cursor: url("../assets/pointer1.cur"),auto;
     position: relative;
     overflow: hidden;
@@ -135,7 +131,7 @@
   .article_tag{
     color: #a8abb2;
     margin-left: 1rem;
-    font-size: 14px;
+    font-size: 20px;
     display: flex;
     flex-direction: row;
 
@@ -148,13 +144,13 @@
     margin: 1rem;
     margin-top: 10px;
     color: #c0c0c0;
-    font-size: 1rem;
+    font-size: 20px;
     line-height: 1.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp:4;
+    -webkit-line-clamp:5;
     overflow-wrap: break-word;
   }
   .art_info{
@@ -171,7 +167,7 @@
     margin-top: 1.5rem;
     margin-bottom: 0.2rem;
     position: absolute;
-    bottom: 1rem;
+    bottom: 3rem;
   }
   p{
     margin-left: 5px;
@@ -183,7 +179,7 @@
     margin-left: 1rem;
   }
   .author_name{
-    font-size: 14px;
+    font-size: 20px;
     color: whitesmoke;
   }
   .author_avatar:hover{
@@ -196,9 +192,9 @@
     display: flex;
     margin-left: 3rem;
     color: gray;
-    font-size: 13px;
+    font-size: 18px;
     position: absolute;
-    bottom: 10px;
+    bottom: 25px;
   }
   @media (max-width: 500px) {
     .artIntroduction{

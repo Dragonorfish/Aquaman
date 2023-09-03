@@ -4,10 +4,10 @@
             <div class="avatar_edit_box">
                 <AvatarEdit :avatarUrl="userInfo.userAVATAR"></AvatarEdit>
             </div>
-            <div class="user_info" v-show="!editing">
+            <div class="user_info" v-if="!editing">
                 <div class="user_name">{{userInfo.userName}}</div>
                 <div class="user_sign">{{userInfo.personSign}}</div>
-                <div class="info_edit_btn" @click="editClick">个人信息修改</div>
+                <div v-if="userInfo.id===userId" class="info_edit_btn" @click="editClick">个人信息修改</div>
             </div>
             <div class="info_edit_box" v-show="editing">
                 <div class="data_item">昵称:</div>
@@ -55,6 +55,7 @@
             <Loading v-if="isLoading"></Loading>
             <Pagination class="pagination" :total="pageNum" @pageChange="pageChange"></Pagination>
         </div>
+
     </div>
 </template>
 
@@ -64,12 +65,17 @@
     import {debounce} from "../../utils/utilsService.ts";
     import {ref,onMounted} from "vue"
     import { ElMessage } from "element-plus";
+    import { useUserStore } from "../../stores/modules/userStore";
+
     const userInfo=ref("");
     const editing=ref(false);
     const isLoading=ref(false);
     const userName=ref("");
     const userSign=ref("");
-
+    const userId=ref("")
+    if (useUserStore().userData.loginStatus){
+      userId.value=JSON.parse(localStorage.getItem('userInfo')).userId
+    }
     const tagList=ref(new Set());
     const articleList=ref([]);
     const talkList=ref([]);
@@ -106,7 +112,7 @@
     function tabClick(tab) {
       hoverTab.value=tab;
       queryData.value={
-        userId:JSON.parse(localStorage.getItem("userInfo")).userId,
+        userId:props.userId,
         tag:"全部",
         page: 0,
         size: 6
@@ -120,9 +126,9 @@
     function initList() {
       changeLoadingState();
       Promise.all([
-        changeList(queryData.tag)
+        changeList(queryData.tag),
+        initTag()
       ]).then(()=>{
-        initTag();
         changeLoadingState();
       })
     }
@@ -206,14 +212,19 @@
     }
 
     function initTag(){
-      tagList.value=new Set()
-      tagList.value.add("全部");
-      articleList.value.forEach((item)=>{
-        tagList.value.add(item.sign);
-      })
-      tagList.value=Array.from(tagList.value);
-      tagList.value=tagList.value.map((tag)=>{
-        return [tag];
+      return new Promise((resolve,reject)=>{
+        doActionByAqBack(
+          getServer().aquamanBackDev,
+          "AqArticleController",
+          "getTagByUserId",
+          {userId:queryData.userId}
+        ).subscribe((response) => {
+          console.log(response);
+          tagList.value=response.data.map((tag,index)=>{
+            return [tag.tagName,tag.articleNum];
+          })
+          resolve();
+        });
       })
     }
 

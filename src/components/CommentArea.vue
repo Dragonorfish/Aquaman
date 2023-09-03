@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="comment_body" v-if="!isLoading">
-      <div class="comment_card">
+      <div v-if="useUserStore().userData.loginStatus" class="comment_card">
         <h1>评论</h1>
         <div class="comment_area">
           <img :src="userInfo.userAVATAR" class="avatar"/>
@@ -9,6 +9,7 @@
         </div>
         <button class="comment_btn" @click="addComment(1,props.familyId,props.familyId)" :disabled="addBtndisable">添加评论</button>
       </div>
+      <div v-if="!useUserStore().userData.loginStatus" style="margin-top:2rem;width: 100%;height: 50px;color: #818384;font-size: 40px;font-weight:600;text-align: center">未登录</div>
       <SplitLine class="split_line"></SplitLine>
       <div class="comment_list">
         <div class="comment_item" v-for="item in commentList">
@@ -22,12 +23,12 @@
                 <span>{{item.userName}}</span>
                 <span style="color: #a8abb2">发布于</span>
                 <span>{{item.addTime.substring(0,10)}}</span>
-                <button @click="openReplyBox(item.id)">回复</button>
+                <button v-if="useUserStore().userData.loginStatus" @click="openReplyBox(item.id)">回复</button>
               </div>
             </div>
 
 
-            <div :id="item.id" class="reply_box">
+            <div v-if="useUserStore().userData.loginStatus" :id="item.id" class="reply_box">
               <div class="reply_area">
                 <img style="margin-left: 0" :src="userInfo.userAVATAR" class="avatar"/>
                 <textarea style="height: 10rem" maxlength="1500" class="comment_input" placeholder="添加回复..." v-model="commentText"></textarea>
@@ -270,6 +271,7 @@
   import { ElMessage } from "element-plus";
   import 'element-plus/es/components/message/style/css';
   import 'element-plus/es/components/message-box/style/css';
+  import { useUserStore } from "../stores/modules/userStore.ts"
 
   let isLoading=ref(true)
   const props = defineProps({
@@ -282,7 +284,6 @@
   let commentText=ref("");
   let loadAlldDisable=ref(true);
   let commentList=ref({});
-  console.log(userInfo.userId)
 
 
   initCommentList()

@@ -65,7 +65,6 @@ export function ajaxPostJson(_url, _body) {
         if (response.data.msg === "token verify fail") {
           localStorage.removeItem("token");
           localStorage.removeItem("userInfo");
-          router.push("/login");
         }
         observer.next(response);
         observer.complete();

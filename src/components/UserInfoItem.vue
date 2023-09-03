@@ -7,7 +7,7 @@
     <div class="person_sign">
         <span>{{author.personSign}}</span>
     </div>
-    <div class="author_center_link">
+    <div @click="ToUserCenter" class="author_center_link">
       <img style="width: 50%;height: 50%" src="/src/assets/svgs/homeIcon.svg">
     </div>
     <div class="info_box">
@@ -26,10 +26,14 @@
 
 <script setup>
 
+    import router from "../router";
+
     const props = defineProps({
       author: { }
     })
-    console.log(props.author)
+    function ToUserCenter() {
+      router.push("/usercenter/"+props.author.id);
+    }
 </script>
 
 <style scoped>

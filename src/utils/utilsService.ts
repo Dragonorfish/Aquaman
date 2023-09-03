@@ -1,6 +1,5 @@
 import * as _ from "underscore";
 import router from "../router";
-import { useConfirmBoxStore } from "../stores/modules/userStore";
 
 export function Base_HasValue(pValue) {
   if (_.isBoolean(pValue)) {
@@ -76,5 +75,4 @@ export function debounce(fn, delay = 500) {
 export function resetUser() {
     localStorage.removeItem('token');
     localStorage.removeItem("userInfo");
-    router.push("/login")
 }

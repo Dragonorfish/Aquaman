@@ -6,6 +6,7 @@
   z-index: 10;
   left: 70%;
   top: 40%;
+  background-image: url(/src/assets/static/hero-drone.webp)
 }
 .bg{
   display:flex;
@@ -15,6 +16,16 @@
   background-size: 100% 100%;
   height: 100%;
   width: 100%;
+}
+.login_card {
+  width: 25rem;
+  height: 280px;
+  margin: 1rem;
+  background-color: #2b2b2b;
+  /*border: ;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .card {
   top: 35%;

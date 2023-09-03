@@ -3,9 +3,7 @@
         <div class="background">
             <BackActivePic></BackActivePic>
         </div>
-
         <div class="background2">
-
             <ToolBar></ToolBar>
             <div class="body">
                 <router-view></router-view>

@@ -1,11 +1,9 @@
 <template>
-    <div class="fly" style="background-image: url(/src/assets/static/hero-drone.webp)"></div>
-    <div class="bg">
-        <div class="card">
+        <div class="login_card">
             <el-form status-icon ref="ruleForm" class="form">
-                <div class="title">Sign in Aquaman-Blog</div>
+                <div class="title">登陆 Aquaman-Blog</div>
                 <div style="display: flex;flex-direction: row;width: 100%;justify-content: space-between">
-                    <div class="word">Email adress</div>
+                    <div class="word">邮箱地址</div>
                 </div>
                 <el-form-item prop="username">
                     <el-input
@@ -14,8 +12,8 @@
                             @keyup.enter.native="login" />
                 </el-form-item>
                 <div style="display: flex;flex-direction: row;width: 100%;justify-content: space-between">
-                    <div class="word">Password</div>
-                    <el-link href="/" class="link" id="update">Forgot Password?</el-link>
+                    <div class="word">密码</div>
+                    <el-link href="/" class="link" id="update">忘记密码?</el-link>
                 </div>
                 <el-form-item prop="password">
                     <el-input
@@ -25,13 +23,11 @@
                             @keyup.enter.native="login" />
                 </el-form-item>
                 <div class="warn">邮箱或密码错误</div>
-                <button id="login_button" type="button" @click="login">登录</button>
                 <div style="width:100%;display: flex;flex-direction: row;justify-content: center">
-                    <el-link href="/register" class="link" id="create">Create an account</el-link>
+                    <el-link href="/register" class="link" id="create">注册帐号</el-link>
                 </div>
             </el-form>
         </div>
-    </div>
 </template>
 
 <script>
@@ -41,6 +37,9 @@
 
   export default {
     name: "login",
+    props:{
+      islogin: { type:Boolean,default(){return false} }
+    },
     data(){
       let userMail;
       let password;
@@ -49,6 +48,14 @@
         password
       }
     },
+    watch:{
+      islogin(newValue,oldValue) {
+        if (newValue===true){
+          this.login()
+        }
+      }
+    },
+
     methods:{
       login(){
         const queryData={
@@ -64,13 +71,9 @@
             console.log(response)
           if ('response' in response&&response.response.data.status===500){
             document.getElementsByClassName("warn")[0].style.display="flex";
+            this.$emit("loginCallBack",false);
           }else {
             document.getElementsByClassName("warn")[0].style.display="none";
-            // this.store.userData.userName=response.data.userName;
-            // this.store.userData.userMail=response.data.userMail;
-            // this.store.userData.userId=response.data.userId;
-            this.store=response.data;
-            console.log(this.store);
             localStorage.removeItem("token");
             localStorage.removeItem("userInfo");
             localStorage.setItem("token",response.data.token);
@@ -80,7 +83,7 @@
                     userAVATAR:response.data.userAVATAR
                }
             ));
-            router.push("/");
+            this.$emit("loginCallBack",true);
           }
         });
       }

@@ -45,16 +45,20 @@
                         </div>
                         <SplitLine></SplitLine>
                         <div class="user_buttons">
-                            <div class="user_button" @click="ToUserCenter">个人主页</div>
-                            <div class="user_button">设置</div>
-                            <div class="user_button" @click="logOut">登出</div>
+                            <div v-if="useUserStore().userData.loginStatus" class="user_button" @click="ToUserCenter">个人主页</div>
+                            <div v-if="useUserStore().userData.loginStatus" class="user_button">设置</div>
+                            <div v-if="useUserStore().userData.loginStatus" class="user_button" @click="logOut">登出</div>
+                            <div v-if="!useUserStore().userData.loginStatus" class="user_button" @click="logIn">登陆</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="user_avatar" :style="{backgroundImage:'url('+userInfo.userAVATAR+')'}" id="button6"/>
+            <div class="user_avatar" id="button6"/>
         </div>
     </div>
+    <ConfirmAlert v-if="loginAlertIsShow" @callBack="loginClick">
+        <login :islogin="isLogin" @loginCallBack="loginCallBack"></login>
+    </ConfirmAlert>
     <ConfirmAlert v-if="alertIsShow" confirmMessage="确认登出?" @callBack="resetFn"></ConfirmAlert>
 </template>
 
@@ -159,16 +163,22 @@
   import { doActionByAqBack } from "../utils/ajaxService";
   import { getServer } from "../environment/environment";
   import {resetUser} from "../utils/utilsService";
+  import login from "../views/loginview/login.vue";
+  import { useUserStore } from "../stores/modules/userStore.ts"
+  import { ElMessage } from "element-plus";
   let alertIsShow=ref(false);
+  let loginAlertIsShow=ref(false);
+  let isLogin=ref(false);
   const userInfo = ref({
-    userAVATAR: "/src/assets/static/weblogo.png",
-    userName: "admin"
+    userAVATAR: "/src/assets/svgs/defaultAvt.svg",
+    userName: "未登陆"
   });
   const userBoxIsShow = ref(false);
   const pubBoxIsShow = ref(false);
-  initUser({ userId: JSON.parse(localStorage.getItem("userInfo")).userId });
 
-
+  if (localStorage.getItem("userInfo")){
+    initUser({ userId: JSON.parse(localStorage.getItem("userInfo")).userId });
+  }
   onMounted(() => {
     document.getElementById("button7").addEventListener("mouseover", function(e) {
       pubBoxIsShow.value = true;
@@ -195,19 +205,42 @@
       queryData
     ).subscribe((response) => {
       userInfo.value = response.data;
-      console.log(userInfo.value);
+      useUserStore().userData.loginStatus=true;
+      document.getElementById("button6").style.backgroundImage='url('+userInfo.value.userAVATAR+')'
     });
   }
   function resetFn(bool) {
     if (bool){
       resetUser();
-    }else {
-      alertIsShow.value=false;
+      userInfo.value={
+        userAVATAR: "/src/assets/svgs/defaultAvt.svg",
+          userName: "未登陆"
+      }
+      useUserStore().userData.loginStatus=false;
     }
+    alertIsShow.value=false;
   }
 
   function logOut() {
     alertIsShow.value=true;
+  }
+  function logIn() {
+    loginAlertIsShow.value=true;
+  }
+  function loginClick(bool) {
+    if (bool){
+      isLogin.value=true;
+    }else {
+      isLogin.value=false;
+      loginAlertIsShow.value=false;
+    }
+  }
+  function loginCallBack(status) {
+    if (status){
+      ElMessage.success('登陆成功')
+      initUser({userId: JSON.parse(localStorage.getItem("userInfo")).userId })
+      loginAlertIsShow.value=false;
+    }
   }
 
   function ToHome() {
